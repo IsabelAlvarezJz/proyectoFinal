@@ -1,7 +1,7 @@
 <%-- 
     Document   : ConsultarCliente
     Created on : 03-mar-2022, 11:14:21
-    Author     : Isabel
+    Author     : Familia
 --%>
 
 <%@page import="com.itq.model.Cliente"%>
@@ -16,7 +16,7 @@
         <title>Consulta de Clientes</title>        
     </head>
     <body>
-        <h1>Insertar Clientes</h1>
+        <h1>Consultar Clientes</h1>
         <table border="1">
             <thead>
                 <tr>
