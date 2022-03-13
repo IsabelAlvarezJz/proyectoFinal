@@ -4,7 +4,7 @@ CREATE TABLE `cliente` (
   `direccion` varchar(255) DEFAULT NULL,
   `email` varchar(255) DEFAULT NULL,
   `password` varchar(20) DEFAULT NULL,
-  `perfil_tipo` varchar(20) DEFAULT NULL
+  `perfil_tipo` varchar(10) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 CREATE TABLE `compras` (
@@ -50,7 +50,7 @@ CREATE TABLE `tarjeta` (
 CREATE TABLE `perfil` (
   `idperfil` int(10) UNSIGNED NOT NULL,
   `tipo` varchar(255) DEFAULT NULL,
-  `descripcion` varchar(16) DEFAULT NULL
+  `descripcion` varchar(255) DEFAULT NULL
   ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 
@@ -105,5 +105,8 @@ ALTER TABLE `detalle_compras`
   ADD CONSTRAINT `detalle_compras_ibfk_1` FOREIGN KEY (`codProducto`) REFERENCES `producto` (`codProducto`) ON DELETE NO ACTION ON UPDATE NO ACTION,
   ADD CONSTRAINT `detalle_compras_ibfk_2` FOREIGN KEY (`idCompras`) REFERENCES `compras` (`idCompras`) ON DELETE NO ACTION ON UPDATE NO ACTION;
 
-ALTER TABLE `cliente`
-  ADD CONSTRAINT `cliente_ibfk_1` FOREIGN KEY (`perfil_tipo`) REFERENCES `perfil` (`idperfil`) ON DELETE NO ACTION ON UPDATE NO ACTION;
+-- ALTER TABLE `cliente`
+--  ADD CONSTRAINT `cliente_ibfk_1` FOREIGN KEY (`perfil_tipo`) REFERENCES `perfil` (`idperfil`) ON DELETE NO ACTION ON UPDATE NO ACTION;
+
+INSERT INTO `bdd_tienda`.`perfil` (`idperfil`, `tipo`, `descripcion`) VALUES ('1', 'Administrador', 'Perfil para Administrador');
+INSERT INTO `bdd_tienda`.`perfil` (`idperfil`, `tipo`, `descripcion`) VALUES ('2', 'Cliente', 'Perfil para Cliente');
