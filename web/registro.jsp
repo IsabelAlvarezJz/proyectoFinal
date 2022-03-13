@@ -84,10 +84,12 @@
                                     }
                                     int perfilTipo = Integer.parseInt(request.getParameter("tipo"));
                                     if (login.registrar(cedula, nombres, direccion, email, String.valueOf(sb), perfilTipo)) {
-                                        //HttpSession objsesion = request.getSession(true);
-                                        //objsesion.setAttribute("usuario", email);
-                                        //objsesion.setAttribute("nombreUsuario", nombres);
-                                        //response.sendRedirect("principal.jsp");
+                                        HttpSession objsesion = request.getSession(true);
+                                        objsesion.setAttribute("cedulaUsuario", cedula);
+                                        objsesion.setAttribute("nombresUsuario", nombres);
+                                        objsesion.setAttribute("direccionUsuario", direccion);
+                                        objsesion.setAttribute("emailUsuario", email);
+                                        objsesion.setAttribute("tipoUsuario", perfilTipo);
                                         response.sendRedirect("principal.jsp");
                                     } else {
                                         out.println("Ups, algo salio mal!");
