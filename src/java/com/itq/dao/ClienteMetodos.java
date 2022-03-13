@@ -96,8 +96,8 @@ public class ClienteMetodos implements ICliente {
     @Override
     public boolean insertarCliente(Cliente client) {
         boolean bandera = true;
-
-        String sql = " INSERT INTO cliente(cedula, nombres, direccion, email, password, perfil_tipo) VALUES( ?, ?, ?, ?, ?, ? )";
+        
+        String sql = " INSERT INTO cliente (cedula, nombres, direccion, email, password, perfil_tipo) VALUES( ?, ?, ?, ?, ?, ? )";
 
         PreparedStatement psCliente = null;
 
