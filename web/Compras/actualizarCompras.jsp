@@ -13,7 +13,6 @@
 <jsp:useBean id="clienteS" class="com.itq.servicio.ClienteServicio" scope="application" />
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <%
-    SimpleDateFormat formatoFecha = new SimpleDateFormat("yyyy-MM-dd");
     int id = Integer.parseInt(request.getParameter("compra").toString());
     compraM = Scompra.buscarPorId(id);
     //List< Pago> listaPerfil = pagoS.buscarPago();
@@ -71,12 +70,12 @@
             </table>
         </form>
         <%
-            SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+            SimpleDateFormat formatoFecha = new SimpleDateFormat("yyyy-MM-dd");
             if (request.getParameter("btnEnviar") != null) {
                 compraM.setIdCompras(Integer.parseInt(request.getParameter("idC")));
                 compraM.setIdPago(Integer.parseInt(request.getParameter("idP")));
                 compraM.setCedula(request.getParameter("ced"));
-                Date fecha = sdf.parse(request.getParameter("fechC"));
+                Date fecha = formatoFecha.parse(request.getParameter("fechC"));
                 compraM.setFechaCompra(fecha);
                 compraM.setMonto(Double.parseDouble(request.getParameter("monto")));
                 compraM.setEstado(request.getParameter("estado"));

@@ -65,14 +65,14 @@
         </table>
     </form>
     <%
-        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+        SimpleDateFormat formatoFecha = new SimpleDateFormat("yyyy-MM-dd");
         Compras co = new Compras();
 
         if (request.getParameter("btnEnviar") != null) {
             co.setIdCompras(Integer.parseInt(request.getParameter("idC")));
             co.setIdPago(Integer.parseInt(request.getParameter("idP")));
             co.setCedula(request.getParameter("ced"));
-            Date fecha = sdf.parse(request.getParameter("fechC"));
+            Date fecha = formatoFecha.parse(request.getParameter("fechC"));
             co.setFechaCompra(fecha);
             co.setMonto(Double.parseDouble(request.getParameter("monto")));
             co.setEstado(request.getParameter("estado"));

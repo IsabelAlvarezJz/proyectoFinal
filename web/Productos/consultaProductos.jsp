@@ -28,7 +28,7 @@
                     <th>Stock</th>
                     <th>ruta</th>
                     <th>Editar</th>
-                    <td>Eliminar</td>
+                    <th>Eliminar</th>
                 </tr>
             </thead>
             <%
