@@ -18,7 +18,7 @@
         <title>Añadir Compra</title>
     </head>
     <body>        
-        <jsp:useBean id="pago" class="" scope="application" />
+        
         <jsp:useBean id="cliente" class="com.itq.servicio.ClienteServicio" scope="application" />
         <%
             //List<Pago> listaPago = pago.buscarPago();
@@ -46,10 +46,6 @@
                     </select></th>
             </tr>
             <tr>
-                <th>Fecha de Compra</th>
-                <th><input type="date" name="fechC" required></th>
-            </tr>
-            <tr>
                 <th>Monto</th>
                 <th><input type="number" name="monto" required></th>
             </tr>
@@ -72,7 +68,7 @@
             co.setIdCompras(Integer.parseInt(request.getParameter("idC")));
             co.setIdPago(Integer.parseInt(request.getParameter("idP")));
             co.setCedula(request.getParameter("ced"));
-            Date fecha = formatoFecha.parse(request.getParameter("fechC"));
+            Date fecha = new Date();
             co.setFechaCompra(fecha);
             co.setMonto(Double.parseDouble(request.getParameter("monto")));
             co.setEstado(request.getParameter("estado"));

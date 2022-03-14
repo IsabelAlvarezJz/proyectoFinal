@@ -12,6 +12,7 @@
 <%
     String id = request.getParameter("codP").toString();
     mP = sP.buscarPorId(id);
+    //out.print(id);
 %>
 <!DOCTYPE html>
 <html>
@@ -32,8 +33,8 @@
                     <th><input type="text" name="nomP" value="<%= mP.getNombres()%>"></th>
                 </tr>
                 <tr>
-                    <th>Foto</th>
-                    <th><input type="file" name="fotoP" value="<%= mP.getFoto()%>"></th>
+                    <th>Foto</th>                    
+                    <th><input type="file" name="fotoP" value="<%= mP.getRuta()%>"></th>
                 </tr>
                 <tr>
                     <th>Descripcion</th>
@@ -41,19 +42,14 @@
                 </tr>
                 <tr>
                     <th>Precio</th>
-                    <th><input type="number" name="precio" value="<%= mP.getPrecio()%>"></th>
+                    <th><input type="text" name="precio" value="<%= mP.getPrecio()%>"></th>
                 </tr>
                 <tr>
                     <th>Stock</th>
                     <th><input type="number" name="stock" value="<%= mP.getStock()%>"></th>
-                </tr>
+                </tr>               
                 <tr>
-                    <th>Ruta</th>
-                    <th><input type="text" name="ruta" value="<%= mP.getRuta()%>"></th>
-                </tr>                
-                <tr>
-                    <td><input type="submit" name="btnEnviar" value="Actualizar Producto">
-                        <br><br><button><a href="consultaProductos.jsp">Regresar a Productos</a></button>
+                    <td><input type="submit" name="btnEnviar" value="Actualizar Producto">                        
                     </td>
                 </tr>                
             </table>
@@ -62,11 +58,11 @@
             if (request.getParameter("btnEnviar") != null) {
                 mP.setCodProducto(request.getParameter("codP"));
                 mP.setNombres(request.getParameter("nomP"));
-                mP.setFoto(request.getParameter("fotoP"));
-                mP.setDescripcion(request.getParameter("descripcion"));
+                //Implementar carga de foto
+                mP.setDescripcion(request.getParameter("descP"));
                 mP.setPrecio(Double.parseDouble(request.getParameter("precio")));
                 mP.setStock(Integer.parseInt(request.getParameter("precio")));
-                mP.setRuta(request.getParameter("ruta"));
+                mP.setRuta("http://localhost/img/ruffles2.jpg");
                 
                 if (sP.actualizarProducto(mP)) {
                     out.print("Datos actualizados correctamente");

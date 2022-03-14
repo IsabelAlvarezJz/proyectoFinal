@@ -75,7 +75,7 @@ public class ProductoMetodos implements IProducto {
 
     @Override
     public Producto buscarPorId(String codProducto) {
-        String sql = " SELECT * FROM prodcuto WHERE codProducto = ? ";
+        String sql = " SELECT * FROM producto WHERE codProducto = ? ";
         Producto produc = null;
         PreparedStatement ps = null;
 
@@ -84,7 +84,7 @@ public class ProductoMetodos implements IProducto {
             ps.setString(1, codProducto);
             ResultSet rs = ps.executeQuery();
             //diferencia entre executeQuery y executeUpdate
-            while (rs.next()) {
+            while (rs.next()) {               
                 String nomP = rs.getString("nombres");
                 String foto = rs.getString("foto");
                 String desc = rs.getString("descripcion");
@@ -118,7 +118,7 @@ public class ProductoMetodos implements IProducto {
             //asigno valores
             ps.setString(1, prod.getCodProducto());
             ps.setString(2, prod.getNombres());
-            ps.setString(3, prod.getFoto());
+            ps.setString(3, prod.getRuta());
             ps.setString(4, prod.getDescripcion());
             ps.setDouble(5, prod.getPrecio());
             ps.setInt(6, prod.getStock());
@@ -141,7 +141,7 @@ public class ProductoMetodos implements IProducto {
     public boolean actualizarProducto(Producto prod) {
         boolean bandera = true;
 
-        String sql = " UPDATE productos SET nombres = ?, foto = ?, descripcion = ?, precio = ?, stock = ?, ruta = ? WHERE codProducto = ?";
+        String sql = " UPDATE producto SET nombres = ?, foto = ?, descripcion = ?, precio = ?, stock = ?, ruta = ? WHERE codProducto = ?";
 
         PreparedStatement ps = null;
 
@@ -150,7 +150,7 @@ public class ProductoMetodos implements IProducto {
 
             //asigno valores
             ps.setString(1, prod.getNombres());
-            ps.setString(2, prod.getFoto());
+            ps.setString(2, prod.getRuta());
             ps.setString(3, prod.getDescripcion());
             ps.setDouble(4, prod.getPrecio());
             ps.setInt(5, prod.getStock());

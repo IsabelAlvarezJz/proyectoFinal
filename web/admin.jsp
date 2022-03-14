@@ -47,7 +47,7 @@
                             <ul class="nav col-12 col-lg-auto my-2 justify-content-center my-md-0 text-small">
                                 <li>
                                 <center>
-                                    <a href="#" class="nav-link text-secondary">
+                                    <a href="admin.jsp" class="nav-link text-secondary">
                                         <i class="zmdi zmdi-home material-icons-name" style="font-size: 30px;"></i><br>
                                         Inicio
                                     </a>
@@ -55,7 +55,7 @@
                                 </li>
                                 <li>
                                 <center>
-                                    <a href="#" class="nav-link text-secondary">
+                                    <a href="Productos/consultaProductos.jsp" class="nav-link text-secondary">
                                         <i class="zmdi zmdi-store material-icons-name" style="font-size: 30px;"></i><br>
                                         Productos
                                     </a>
@@ -63,15 +63,31 @@
                                 </li>
                                 <li>
                                 <center>
-                                    <a href="#" class="nav-link text-secondary">
-                                        <i class="zmdi zmdi-account-add material-icons-name" style="font-size: 30px;"></i><br>
-                                        Usuarios
+                                    <a href="Compras/consultaCompras.jsp" class="nav-link text-secondary">
+                                        <i class="zmdi zmdi-ticket-star material-icons-name" style="font-size: 30px;"></i><br>
+                                        Compras
                                     </a>
                                 </center>
                                 </li>
                                 <li>
                                 <center>
-                                    <a href="#" class="nav-link text-secondary">
+                                    <a href="Pagos/consultaPagos.jsp" class="nav-link text-secondary">
+                                        <i class="zmdi zmdi-card material-icons-name" style="font-size: 30px;"></i><br>
+                                        Pagos
+                                    </a>
+                                </center>
+                                </li>
+                                <li>
+                                <center>
+                                    <a href="Cliente/consultarCliente.jsp" class="nav-link text-secondary">
+                                        <i class="zmdi zmdi-account-add material-icons-name" style="font-size: 30px;"></i><br>
+                                        Clientes
+                                    </a>
+                                </center>
+                                </li>
+                                <li>
+                                <center>
+                                    <a href="Perfil/consultarPerfil.jsp" class="nav-link text-secondary">
                                         <i class="zmdi zmdi-accounts-list material-icons-name" style="font-size: 30px;"></i><br>
                                         Perfiles
                                     </a>

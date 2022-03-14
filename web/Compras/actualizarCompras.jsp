@@ -3,20 +3,20 @@
     Created on : 13/03/2022, 16:26:32
     Author     : Familia
 --%>
+<%@page import="com.itq.configuracion.Fecha"%>
 <%@page import="java.util.Date"%>
 <%@page import="com.itq.model.Cliente"%>
 <%@page import="java.util.List"%>
 <%@page import="java.text.SimpleDateFormat"%>
 <jsp:useBean id="compraM" class="com.itq.model.Compras" scope="application"/>
 <jsp:useBean id="Scompra" class="com.itq.servicio.CompraServicio" scope="application" />
-<jsp:useBean id="pagoS" class="" scope="application" />
 <jsp:useBean id="clienteS" class="com.itq.servicio.ClienteServicio" scope="application" />
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <%
     int id = Integer.parseInt(request.getParameter("compra").toString());
     compraM = Scompra.buscarPorId(id);
     //List< Pago> listaPerfil = pagoS.buscarPago();
-    List< Cliente> listaCliente = clienteS.bucarCliente();
+    List<Cliente> listaCliente = clienteS.bucarCliente();
 %>
 <!DOCTYPE html>
 <html>
@@ -30,7 +30,7 @@
             <table>
                 <tr>
                     <th>Id Compra</th>
-                    <th><input type="number" name="idC" maxlength="10" readonly></th>
+                    <th><input type="number" name="idC" value="<%= compraM.getIdCompras()%>"maxlength="10" readonly></th>
                 </tr>
                 <tr>
                     <th>Id Pago</th>
@@ -75,7 +75,7 @@
                 compraM.setIdCompras(Integer.parseInt(request.getParameter("idC")));
                 compraM.setIdPago(Integer.parseInt(request.getParameter("idP")));
                 compraM.setCedula(request.getParameter("ced"));
-                Date fecha = formatoFecha.parse(request.getParameter("fechC"));
+                Date fecha = new Date();
                 compraM.setFechaCompra(fecha);
                 compraM.setMonto(Double.parseDouble(request.getParameter("monto")));
                 compraM.setEstado(request.getParameter("estado"));

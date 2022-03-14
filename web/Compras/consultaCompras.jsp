@@ -41,11 +41,11 @@
                     out.println("<td>" + temp.getEstado()+ "</td>");
             %>
             <td>
-                <a href="actualizarCliente.jsp?compra=<%= temp.getIdCompras()%>"
+                <a href="actualizarCompras.jsp?compra=<%= temp.getIdCompras()%>"
                    onclick="return confirm('Seguro que desea eliminar la Compra?')">Editar</a>
             </td>
             <td>
-                <a href="eliminarCliente.jsp?compra=<%= temp.getIdCompras()%>"
+                <a href="eliminarCompras.jsp?compra=<%= temp.getIdCompras()%>"
                    onclick="return confirm('Seguro que desea eliminar la Compra?')">Eliminar</a>
             </td>
 
