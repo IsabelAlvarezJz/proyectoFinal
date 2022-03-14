@@ -27,7 +27,7 @@
                     <th>Password</th>
                     <th>Perfil</th>
                     <th>Editar</th>
-                    <th>Eliminar</th>
+                    <th>Elimina</th>
                 </tr>
             </thead>
             <%
