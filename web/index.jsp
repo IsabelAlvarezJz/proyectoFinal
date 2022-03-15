@@ -72,7 +72,8 @@
                                         objsesion.setAttribute("nombresUsuario", clienteLogin.getNombres());
                                         objsesion.setAttribute("direccionUsuario", clienteLogin.getDireccion());
                                         objsesion.setAttribute("emailUsuario", clienteLogin.getEmail());
-                                        objsesion.setAttribute("tipoUsuario", clienteLogin.getPerfil_tipo());
+                                        //objsesion.setAttribute("tipoUsuario", clienteLogin.getPerfil_tipo());
+                                        //objsesion.setAttribute("contador", 0);
                                         
                                         if(clienteLogin.getPerfil_tipo() == 1){
                                             response.sendRedirect("admin.jsp");

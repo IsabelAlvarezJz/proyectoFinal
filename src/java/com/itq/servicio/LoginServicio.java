@@ -57,6 +57,7 @@ public class LoginServicio {
             rs.close();
         } catch (SQLException ex) {
             Logger.getLogger(ClienteMetodos.class.getName()).log(Level.SEVERE, null, ex);
+            System.out.println("Error al intentar iniciar sesión ... !!!");
         } finally {
             closeConecction();
         }     

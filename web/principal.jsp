@@ -5,11 +5,15 @@
 --%>
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
+<%@page import="com.itq.model.Producto"%>
+<%@page import="java.util.List"%>
+<jsp:useBean id="producto" class="com.itq.servicio.ProductoServicio" scope="application"/>
 <%
     HttpSession objsesion = request.getSession(true);
     String usuario = "";
     String email = "";
     String cedula = "";
+    int contador = 0;
     
     if(objsesion.getAttribute("nombresUsuario") == null){
         response.sendRedirect("index.jsp");
@@ -17,8 +21,11 @@
         cedula = objsesion.getAttribute("cedulaUsuario").toString();
         usuario = objsesion.getAttribute("nombresUsuario").toString();
         email = objsesion.getAttribute("emailUsuario").toString();
+        contador = Integer.parseInt(objsesion.getAttribute("contador").toString());
+        //contador = objsesion
         if (usuario.equals("")) {
             usuario = "usuario";
+            contador = 0;
         }
     }
     
@@ -44,9 +51,6 @@
                                 <img src="images/user.png" alt="sing up image" style="width: 40px; height: 40px; margin-right: 20px;"> 
                                 <span style="color: black;">Hola: <% out.println(usuario);%></span>
                             </a>
-                            <a href="/" class="d-flex align-items-center my-2 my-lg-0 me-lg-auto text-white text-decoration-none">
-                                <span style="color: black;">SHOOPER</span>
-                            </a>
                             <ul class="nav col-12 col-lg-auto my-2 justify-content-center my-md-0 text-small">
                                 <li>
                                 <center>
@@ -66,9 +70,21 @@
                                 </li>
                                 <li>
                                 <center>
-                                    <a href="#" class="nav-link text-secondary">
-                                        <i class="zmdi zmdi-shopping-cart material-icons-name" style="font-size: 30px; color: black;"></i><br>
-                                        <span style="color: black;">Mis Compras</span>
+                                    <a href="" class="nav-link text-secondary">
+                                        <i class="zmdi zmdi-accounts-list material-icons-name" style="font-size: 30px; color: black;"> 
+                                        </i>
+                                        <br>
+                                        <span style="color: black;">Mis compras</span>
+                                    </a>
+                                </center>
+                                </li>
+                                <li>
+                                <center>
+                                    <a href="Controlador?accion=Carrito" class="nav-link text-secondary">
+                                        <i class="zmdi zmdi-shopping-cart material-icons-name" style="font-size: 30px; color: black;"> 
+                                        </i>
+                                        <br>
+                                        <span style="color: red;">(  )</span>
                                     </a>
                                 </center>
                                 </li>
@@ -87,27 +103,41 @@
             </header>
             <div class="container">
                 <br>
-                <div class="card-header">
-                    <h5>Compra facil con un solo clic</h5>
+                <div class="card-header" style="border-radius: 30px;">
+                    <h5 style="padding: 5px;">Compra facil con un solo clic</h5>
                 </div>
-                <div class='card-body'>
+                <div class='card-body' style="background-color: #FFF;">
                     <div class="row">
-                        <div class="col-3">
-                            <div class="card-header">
-                                Producto 1
-                            </div>
-                            <div class='card-body'>
-                                Descripción
-                            </div>
-                            <div class='card-footer'>
-                                <button type="button" class="btn btn-outline-primary" name="btnAgregar">
-                                    <i class="display-flex-center zmdi zmdi-shopping-cart" style='font-size: 20px;'></i>
-                                </button>
-                                <button type="button" class="btn btn-outline-primary" name="btnComprar">
-                                    <i class="display-flex-center zmdi zmdi-card" style='font-size: 20px;'></i>
-                                </button>
-                            </div>
+                        <%
+                            List<Producto> listaProducto = producto.bucarProducto();
+                            for (Producto temp : listaProducto) {
+
+                        %>
+                        <div class="col-3" style="margin-bottom: 20px;">
+                            <form method="post">
+                                <center>
+                                    <div class="card-header" style="border-radius: 1px; background-color: #ecedee;">
+                                        <%= temp.getNombres()%>
+                                    </div>
+                                    <div class='card-body' style="background-color: #FFF;">
+                                        <img src="<%= temp.getRuta() %>" alt="alt" width="100" height="100"/>
+                                        <br>
+                                        <%= temp.getDescripcion()%>
+                                    </div>
+                                    <div class='card-footer' style="border-radius: 1px; background-color: #ecedee;">
+                                        <a href="Controlador?accion=AgregarCarrito&idProducto=<%= temp.getCodProducto() %>" class="btn btn-outline-primary">
+                                            <i class="zmdi zmdi-shopping-cart material-icons-name"></i>
+                                        </a>
+                                        <a href="Controlador?accion=Comprar&idProducto=<%= temp.getCodProducto() %>" class="btn btn-success">
+                                            <i class="zmdi zmdi-money material-icons-name"></i>
+                                        </a>
+                                    </div>
+                                </center>
+                            </form>
                         </div>
+                        <%
+                            }
+                        %>
                     </div>
                 </div>
             </div>

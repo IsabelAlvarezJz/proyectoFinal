@@ -193,5 +193,30 @@ public class ProductoMetodos implements IProducto {
 
         return bandera;
     }
+    
+    public Boolean stockDisponible(String idProduct) throws SQLException{
+        String sql = " SELECT * FROM producto WHERE codProducto = ? ";
+        PreparedStatement ps = null;
+        int stock = 0;
+        try {
+            ps = conn.prepareStatement(sql);
+            ps.setString(1, idProduct);
+            ResultSet rs = ps.executeQuery();
+
+            while (rs.next()) {
+                stock = rs.getInt("stock");
+            }
+            if(stock > 0){
+                return true;
+            }
+            rs.close();
+        } catch (SQLException ex) {
+            Logger.getLogger(ProductoMetodos.class.getName()).log(Level.SEVERE, null, ex);
+            return false;
+        } finally {
+            closeConecction();
+        }
+        return false;
+    }
 
 }
