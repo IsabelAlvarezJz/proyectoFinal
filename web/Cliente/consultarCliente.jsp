@@ -16,6 +16,7 @@
         <title>Consulta de Clientes</title>        
     </head>
     <body>
+        <jsp:include page="menu.jsp" />
         <h1>Consultar Clientes</h1>
         <table border="1">
             <thead>
