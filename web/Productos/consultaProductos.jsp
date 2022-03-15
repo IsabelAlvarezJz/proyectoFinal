@@ -6,6 +6,7 @@
 <%@page import="com.itq.model.Producto"%>
 <%@page import="java.util.List"%>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
+
 <jsp:useBean id="producto" class="com.itq.servicio.ProductoServicio" scope="application"/>
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 
@@ -26,6 +27,7 @@
         }
     }
 %>
+
 
 <!DOCTYPE html>
 <html>
@@ -166,12 +168,8 @@
                     </center>
                 </div>
             </div>
-
-
-
         </main>
         <script src="../js/nav.js"></script>
-
     </body>
 </html>
 

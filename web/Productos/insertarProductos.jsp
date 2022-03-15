@@ -5,12 +5,7 @@
 --%>
 
 <%@page import="java.io.File"%>
-<%@page import="org.apache.commons.fileupload.FileItem"%>
 <%@page import="java.util.List"%>
-<%@page import="org.apache.commons.fileupload.servlet.ServletFileUpload"%>
-<%@page import="org.apache.commons.fileupload.disk.DiskFileItemFactory"%>
-<%@page import="org.apache.commons.fileupload.FileItemFactory"%>
-<%@page import="org.apache.commons.fileupload.FileItemFactory"%>
 <%@page import="com.itq.model.Producto"%>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <jsp:useBean id="producto" class="com.itq.servicio.ProductoServicio" scope="application" />
@@ -31,6 +26,7 @@
         }
     }
 %>
+
 <!DOCTYPE html>
 <html>
     <head>
@@ -184,12 +180,12 @@
                         if (producto.insertarProducto(pro)) {
                             out.print("Datos insertados correctamente");
                             out.print(pro);
-                        
+
                         } else {
                             out.print("No fue posible insertar datos");
                             out.print(pro);
                         }
-                                               
+
                     }
                 %>
 

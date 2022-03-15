@@ -3,7 +3,11 @@ CREATE TABLE `cliente` (
   `nombres` varchar(255) DEFAULT NULL,
   `direccion` varchar(255) DEFAULT NULL,
   `email` varchar(255) DEFAULT NULL,
+<<<<<<< HEAD
   `password` varchar(40) DEFAULT NULL,
+=======
+  `password` varchar(20) DEFAULT NULL,
+>>>>>>> Jhostin
   `perfil_tipo` varchar(10) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 

@@ -8,4 +8,6 @@
     String id = request.getParameter("codP").toString();
     pr.eliminarProducto(id);    
 %>
+
 <jsp:forward page="consultaProductos.jsp"/>
+

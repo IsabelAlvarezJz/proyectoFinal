@@ -8,7 +8,6 @@ package com.itq.dao;
 import com.itq.configuracion.Conexion;
 import com.itq.interfaces.IProducto;
 import com.itq.model.Producto;
-import java.io.FileInputStream;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -84,7 +83,9 @@ public class ProductoMetodos implements IProducto {
             ps.setString(1, codProducto);
             ResultSet rs = ps.executeQuery();
             //diferencia entre executeQuery y executeUpdate
+
             while (rs.next()) {               
+
                 String nomP = rs.getString("nombres");
                 String foto = rs.getString("foto");
                 String desc = rs.getString("descripcion");

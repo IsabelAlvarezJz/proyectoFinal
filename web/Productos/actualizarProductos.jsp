@@ -169,7 +169,7 @@
             mP.setRuta("http://localhost/img/ruffles2.jpg");
 
             if (sP.actualizarProducto(mP)) {
-                out.print("Datos actualizados correctamente");                
+                out.print("Datos actualizados correctamente");
                 //out.print(mP);
             } else {
                 out.print("No fue posible actualizar datos");

@@ -11,11 +11,18 @@
                     <path-in-war>WEB-INF/lib</path-in-war>
                 </library>
                 <library dirs="200">
+<<<<<<< HEAD
                     <file>${file.reference.commons-fileupload-1.4.jar}</file>
                     <path-in-war>WEB-INF/lib</path-in-war>
                 </library>
                 <library dirs="200">
                     <file>${file.reference.commons-io-2.8.0.jar}</file>
+=======
+                    <file>${libs.jakartaee-web-api-8.0.classpath}</file>
+                </library>
+                <library dirs="200">
+                    <file>${file.reference.javax.servlet.jar}</file>
+>>>>>>> Jhostin
                     <path-in-war>WEB-INF/lib</path-in-war>
                 </library>
             </web-module-libraries>

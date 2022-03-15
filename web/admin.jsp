@@ -10,8 +10,8 @@
     String usuario = "";
     String email = "";
     String cedula = "";
-    
-    if(objsesion.getAttribute("nombresUsuario") == null){
+
+    if (objsesion.getAttribute("nombresUsuario") == null) {
         response.sendRedirect("index.jsp");
     } else {
         usuario = objsesion.getAttribute("nombresUsuario").toString();
@@ -84,13 +84,19 @@
                                         Clientes
                                     </a>
                                 </center>
+                                <a href="#" class="nav-link text-secondary">
+                                    <i class="zmdi zmdi-account-add material-icons-name" style="font-size: 30px;"></i><br>
+                                    Usuarios
+                                </a>
+                                </center>
                                 </li>
                                 <li>
                                 <center>
                                     <a href="Perfil/consultarPerfil.jsp" class="nav-link text-secondary">
-                                        <i class="zmdi zmdi-accounts-list material-icons-name" style="font-size: 30px;"></i><br>
-                                        Perfiles
-                                    </a>
+                                        <a href="#" class="nav-link text-secondary">
+                                            <i class="zmdi zmdi-accounts-list material-icons-name" style="font-size: 30px;"></i><br>
+                                            Perfiles
+                                        </a>
                                 </center>
                                 </li>
                                 <li>

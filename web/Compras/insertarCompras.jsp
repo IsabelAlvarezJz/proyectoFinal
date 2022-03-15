@@ -172,6 +172,7 @@
             co.setIdCompras(Integer.parseInt(request.getParameter("idC")));
             co.setIdPago(Integer.parseInt(request.getParameter("idP")));
             co.setCedula(request.getParameter("ced"));
+
             Date fecha = new Date();
             co.setFechaCompra(fecha);
             co.setMonto(Double.parseDouble(request.getParameter("monto")));
