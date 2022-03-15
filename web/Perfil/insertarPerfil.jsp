@@ -117,18 +117,18 @@
                         <table class="table">
                             <tr>
                                 <th>Tipo</th>
-                                <th><input type="text" class="form-control" name="tipo"></th>
+                                <th><input type="text" class="form-control" name="tipo" required></th>
                             </tr>
                             <tr>
                                 <th>Descripcion</th>
-                                <th><input type="text" class="form-control" name="des"></th>
+                                <th><input type="text" class="form-control" name="des" required></th>
                             </tr>                
 
                         </table><br><br>
                     </div>
                     <div class="card-footer">
                         <center>
-                            <input class="btn btn-outline-primary" type="submit" name="btnEnviar" value="Insertar Perfil" >  
+                            <input class="btn btn-outline-primary" type="submit" name="btnEnviar" value="Insertar Perfil" onclick="return confirm('Seguro que desea inseratar el perfil?')">  
                         </center>
                     </div>
                 </form>

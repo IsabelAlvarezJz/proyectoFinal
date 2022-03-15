@@ -134,23 +134,23 @@
                             </tr>
                             <tr>
                                 <th>Nombres</th>
-                                <th><input type="text" class="form-control" name="nomC" value="<%= cm.getNombres()%>"></th>
+                                <th><input type="text" class="form-control" name="nomC" value="<%= cm.getNombres()%>" required></th>
                             </tr>
                             <tr>
                                 <th>Direccion</th>
-                                <th><input type="text" class="form-control" name="dirL" value="<%= cm.getDireccion()%>"></th>
+                                <th><input type="text" class="form-control" name="dirL" value="<%= cm.getDireccion()%>" required></th>
                             </tr>
                             <tr>
                                 <th>Email</th>
-                                <th><input type="email" class="form-control" name="email" value="<%= cm.getEmail()%>"></th>
+                                <th><input type="email" class="form-control" name="email" value="<%= cm.getEmail()%>" required></th>
                             </tr>
-                            <tr>
+                            <tr hidden>
                                 <th>Password</th>
-                                <th><input type="password" class="form-control" name="pass" value="<%= cm.getPassword()%>"></th>
+                                <th><input type="password" class="form-control" name="pass" value="<%= cm.getPassword()%>" ></th>
                             </tr>
                             <tr>
                                 <th>Perfil</th>
-                                <th><select class="form-control" name="perfil" >
+                                <th><select class="form-control" name="perfil" required>
                                         <% for (Perfil perf : listaPerfil) {%>
                                         <option value="<%= perf.getIdPerfil()%>"
                                                 <%
@@ -169,7 +169,7 @@
                     </div>
                     <div class="card-footer">
                         <center>
-                            <input class="btn btn-outline-primary" type="submit" name="btnEnviar" value="Actualizar Producto" >  
+                            <input class="btn btn-outline-primary" type="submit" name="btnEnviar" value="Actualizar Cliente" onclick="return confirm('Seguro que desea actualizar el cliente?')">  
                         </center>
                     </div>
                 </form>
