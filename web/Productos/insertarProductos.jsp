@@ -1,15 +1,14 @@
 <%-- 
-    Document   : consultaProductos
-    Created on : 13 mar. 2022, 08:52:44
-    Author     : Famila
+    Document   : insertarProductos
+    Created on : 13/03/2022, 15:26:38
+    Author     : Familia
 --%>
-<%@page import="com.itq.model.Producto"%>
+
+<%@page import="java.io.File"%>
 <%@page import="java.util.List"%>
+<%@page import="com.itq.model.Producto"%>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
-
-<jsp:useBean id="producto" class="com.itq.servicio.ProductoServicio" scope="application"/>
-<%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
-
+<jsp:useBean id="producto" class="com.itq.servicio.ProductoServicio" scope="application" />
 <%
     HttpSession objsesion = request.getSession(false);
     String usuario = "";
@@ -28,12 +27,11 @@
     }
 %>
 
-
 <!DOCTYPE html>
 <html>
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-        <title>Consulta Productos </title>
+        <title>Agregar nuevo producto</title>
         <link rel="canonical" href="https://getbootstrap.com/docs/5.1/examples/headers/">
         <link href="../assets/dist/css/bootstrap.min.css" rel="stylesheet">
         <link href="../css/headers.css" rel="stylesheet">
@@ -115,61 +113,81 @@
             </header>
             <div class="container"> 
                 <br>
-                <div class="card-header">
-                    <h1>Consultar Productos</h1>
-                </div>
-                <div class="card-body">
-                    <table class="table">
-                        <thead>
+                <form enctype="multipart/form-data" >
+                    <div class="card-header">
+                        <h1>Insertar Producto</h1>
+
+                    </div>
+                    <div class="card-body">
+                        <table>
                             <tr>
-                                <th>Codigo de producto</th>
-                                <th>Nombres</th>
-                                <th>Foto</th> 
-                                <th>Descripcion</th>
-                                <th>Precio</th>
-                                <th>Stock</th>
-                                <th>Editar</th>
-                                <th>Eliminar</th>
+                                <th>Codigo Producto</th>
+                                <th><input type="text" class="form-control" name="idP" maxlength="10" required></th>
                             </tr>
-                        </thead>
-                        <%
+                            <tr>
+                                <th>Nombre</th>
+                                <th><input type="text" class="form-control" name="nomP" required></th>
+                            </tr>
+                            <tr>
+                                <th>Foto</th>
+                                <th><input type="file" class="form-control" name="fotoP" required></th>
+                            </tr>
+                            <tr>
+                                <th>Descripcion</th>
+                                <th><textarea type="text" class="form-control" name="descP" required></textarea></th>
+                            </tr>
+                            <tr>
+                                <th>Precio</th>
+                                <th><input type="number" class="form-control" name="precio" required></th>
+                            </tr>
+                            <tr>
+                                <th>Stock</th>
+                                <th><input type="number" class="form-control" name="stock" required></th>
+                            </tr>       
+                        </table>
+                    </div>
+                    <div class="card-footer">
+                        <center>
+                            <input type="submit" class="btn btn-outline-primary" name="btnEnviar" value="Crear Producto"> 
+                        </center>
+                    </div>
 
-                            List<Producto> listaProducto = producto.bucarProducto();
-                            for (Producto temp : listaProducto) {
-                                out.println("<tr>");
-                                out.println("<td>" + temp.getCodProducto() + "</td>");
-                                out.println("<td>" + temp.getNombres() + "</td>");
-                                %>
-                                <td><img src="<%= temp.getRuta() %>" alt="alt" width="50" height="50"/></td>
-                                <%
-                                out.println("<td>" + temp.getDescripcion() + "</td>");
-                                out.println("<td>" + temp.getPrecio() + "</td>");
-                                out.println("<td>" + temp.getStock() + "</td>");
-                        %>
-                        <td>
-                            <a href="actualizarProductos.jsp?codP=<%= temp.getCodProducto()%>">Editar</a>
-                        </td>
-                        <td>
-                            <a href="eliminarProductos.jsp?codP=<%= temp.getCodProducto()%>"
-                               onclick="return confirm('Seguro que desea eliminar el Producto?')">Eliminar</a>
-                        </td>
 
-                        <%
-                                out.println("</tr>");
+                </form>
+                <%
+                    Producto pro = new Producto();
+
+                    if (request.getParameter("btnEnviar") != null) {
+                        pro.setCodProducto(request.getParameter("idP"));
+                        pro.setNombres(request.getParameter("nomP"));
+                        pro.setDescripcion(request.getParameter("descP"));
+                        pro.setPrecio(Double.parseDouble(request.getParameter("precio")));
+                        pro.setStock(Integer.parseInt(request.getParameter("stock")));
+                        /*FileItemFactory file = new DiskFileItemFactory();
+                        ServletFileUpload fileUpload = new ServletFileUpload(file);
+                        List items = fileUpload.parseRequest(request);
+                        for (int i = 0; i < items.size(); i++) {
+                            FileItem fileItem = (FileItem) items.get(i);
+                            if (!fileItem.isFormField()) {
+                                File f = new File("C:/xampp/htdocs/img/" + fileItem.getName());
+                                fileItem.write(f);
+                                pro.setRuta("http://localhost/img/" + fileItem.getName());
+                                //out.print("http://localhost/img/" + fileItem.getName());
                             }
-                        %>
-                    </table>      
-                </div>
-                <div class="card-footer">
-                    <center>
-                        <a class="btn btn-outline-primary" name="btnGuardar" href="insertarProductos.jsp">
-                            Crear Producto
-                        </a>
-                    </center>
-                </div>
-            </div>
-        </main>
-        <script src="../js/nav.js"></script>
-    </body>
-</html>
+                        }*/
+                        out.print(request.getParameter("nomP"));
+                        pro.setRuta("http://localhost/img/ruffles.jpg");
+                        if (producto.insertarProducto(pro)) {
+                            out.print("Datos insertados correctamente");
+                            out.print(pro);
 
+                        } else {
+                            out.print("No fue posible insertar datos");
+                            out.print(pro);
+                        }
+
+                    }
+                %>
+
+                </body>
+                </html>

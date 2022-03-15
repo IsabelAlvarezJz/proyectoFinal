@@ -1,15 +1,17 @@
 <%-- 
-    Document   : consultaProductos
-    Created on : 13 mar. 2022, 08:52:44
-    Author     : Famila
+    Document   : insertarCompras
+    Created on : 13/03/2022, 16:02:36
+    Author     : Familia
 --%>
-<%@page import="com.itq.model.Producto"%>
+
+<%@page import="java.util.Date"%>
+<%@page import="java.text.SimpleDateFormat"%>
+<%@page import="com.itq.model.Compras"%>
+<%@page import="com.itq.model.Cliente"%>
 <%@page import="java.util.List"%>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
-
-<jsp:useBean id="producto" class="com.itq.servicio.ProductoServicio" scope="application"/>
-<%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
-
+<jsp:useBean id="com" class="com.itq.servicio.CompraServicio" scope="application" />
+<jsp:useBean id="cliente" class="com.itq.servicio.ClienteServicio" scope="application"/>
 <%
     HttpSession objsesion = request.getSession(false);
     String usuario = "";
@@ -27,18 +29,17 @@
         }
     }
 %>
-
-
 <!DOCTYPE html>
 <html>
     <head>
-        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-        <title>Consulta Productos </title>
+        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">        
+        <title>Añadir Compra</title>
         <link rel="canonical" href="https://getbootstrap.com/docs/5.1/examples/headers/">
         <link href="../assets/dist/css/bootstrap.min.css" rel="stylesheet">
         <link href="../css/headers.css" rel="stylesheet">
         <link rel="stylesheet" href="../fonts/material-icon/css/material-design-iconic-font.min.css">
     </head>
+    <body>    
     <body>
         <main>
             <header>
@@ -116,60 +117,75 @@
             <div class="container"> 
                 <br>
                 <div class="card-header">
-                    <h1>Consultar Productos</h1>
+                    <h1>Añadir Compra</h1>
+                    <%
+                        //List<Pago> listaPago = pago.buscarPago();
+                        List<Cliente> listaCliente = cliente.bucarCliente();
+                    %>
                 </div>
                 <div class="card-body">
                     <table class="table">
-                        <thead>
-                            <tr>
-                                <th>Codigo de producto</th>
-                                <th>Nombres</th>
-                                <th>Foto</th> 
-                                <th>Descripcion</th>
-                                <th>Precio</th>
-                                <th>Stock</th>
-                                <th>Editar</th>
-                                <th>Eliminar</th>
-                            </tr>
-                        </thead>
-                        <%
-
-                            List<Producto> listaProducto = producto.bucarProducto();
-                            for (Producto temp : listaProducto) {
-                                out.println("<tr>");
-                                out.println("<td>" + temp.getCodProducto() + "</td>");
-                                out.println("<td>" + temp.getNombres() + "</td>");
-                                %>
-                                <td><img src="<%= temp.getRuta() %>" alt="alt" width="50" height="50"/></td>
-                                <%
-                                out.println("<td>" + temp.getDescripcion() + "</td>");
-                                out.println("<td>" + temp.getPrecio() + "</td>");
-                                out.println("<td>" + temp.getStock() + "</td>");
-                        %>
-                        <td>
-                            <a href="actualizarProductos.jsp?codP=<%= temp.getCodProducto()%>">Editar</a>
-                        </td>
-                        <td>
-                            <a href="eliminarProductos.jsp?codP=<%= temp.getCodProducto()%>"
-                               onclick="return confirm('Seguro que desea eliminar el Producto?')">Eliminar</a>
-                        </td>
-
-                        <%
-                                out.println("</tr>");
-                            }
-                        %>
-                    </table>      
+                        <tr>
+                            <th>Id Compra</th>
+                            <th><input type="number" name="idC" class="form-control" maxlength="10" required></th>
+                        </tr>
+                        <tr>
+                            <th>Id Pago</th>
+                            <th><input type="number" name="idP" class="form-control" required></th>
+                        </tr>
+                        <tr>
+                            <th>Cedula</th>
+                            <th><select name="ced" class="form-control">
+                                    <option> -- Seleccione Cliente --</option>
+                                    <% for (Cliente cl : listaCliente) {%>
+                                    <option value="<%= cl.getCedula()%>"><%= cl.getNombres()%></option>
+                                    <% }%>
+                                </select></th>
+                        </tr>
+                        <tr>
+                            <th>Monto</th>
+                            <th><input type="number" name="monto" class="form-control" required></th>
+                        </tr>
+                        <tr>
+                            <th>Estado</th>
+                            <th><input type="text" name="estado" class="form-control"></th>
+                        </tr> 
+                        <tr>
+                            <td><input type="submit" name="btnEnviar" value="Actualizar Compra">
+                            </td>
+                        </tr>     
+                    </table>
                 </div>
                 <div class="card-footer">
-                    <center>
-                        <a class="btn btn-outline-primary" name="btnGuardar" href="insertarProductos.jsp">
-                            Crear Producto
-                        </a>
-                    </center>
+                   <center>
+                            <input type="submit" class="btn btn-outline-primary" name="btnEnviar" value="Crear Compra"> 
+                        </center>
                 </div>
             </div>
         </main>
         <script src="../js/nav.js"></script>
     </body>
-</html>
+    <%
+        Compras co = new Compras();
 
+        if (request.getParameter("btnEnviar") != null) {
+            co.setIdCompras(Integer.parseInt(request.getParameter("idC")));
+            co.setIdPago(Integer.parseInt(request.getParameter("idP")));
+            co.setCedula(request.getParameter("ced"));
+
+            Date fecha = new Date();
+            co.setFechaCompra(fecha);
+            co.setMonto(Double.parseDouble(request.getParameter("monto")));
+            co.setEstado(request.getParameter("estado"));
+
+            //out.print(local)
+            if (com.insertarCompra(co)) {
+                out.print("Datos insertados correctamente");
+                out.print(co);
+            } else {
+                out.print("No fue posible insertar datos");
+                out.print(co);
+            }
+        }
+    %>
+</html>

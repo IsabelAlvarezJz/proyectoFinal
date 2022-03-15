@@ -1,15 +1,16 @@
 <%-- 
-    Document   : consultaProductos
-    Created on : 13 mar. 2022, 08:52:44
-    Author     : Famila
+    Document   : actualizarCompras
+    Created on : 13/03/2022, 16:26:32
+    Author     : Familia
 --%>
-<%@page import="com.itq.model.Producto"%>
+<%@page import="java.util.Date"%>
+<%@page import="com.itq.model.Cliente"%>
 <%@page import="java.util.List"%>
+<%@page import="java.text.SimpleDateFormat"%>
+<jsp:useBean id="compraM" class="com.itq.model.Compras" scope="application"/>
+<jsp:useBean id="Scompra" class="com.itq.servicio.CompraServicio" scope="application" />
+<jsp:useBean id="clienteS" class="com.itq.servicio.ClienteServicio" scope="application" />
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
-
-<jsp:useBean id="producto" class="com.itq.servicio.ProductoServicio" scope="application"/>
-<%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
-
 <%
     HttpSession objsesion = request.getSession(false);
     String usuario = "";
@@ -28,12 +29,17 @@
     }
 %>
 
-
+<%
+    int id = Integer.parseInt(request.getParameter("compra").toString());
+    compraM = Scompra.buscarPorId(id);
+    //List< Pago> listaPerfil = pagoS.buscarPago();
+    List<Cliente> listaCliente = clienteS.bucarCliente();
+%>
 <!DOCTYPE html>
 <html>
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-        <title>Consulta Productos </title>
+        <title>Actualizar Compra</title>
         <link rel="canonical" href="https://getbootstrap.com/docs/5.1/examples/headers/">
         <link href="../assets/dist/css/bootstrap.min.css" rel="stylesheet">
         <link href="../css/headers.css" rel="stylesheet">
@@ -116,49 +122,46 @@
             <div class="container"> 
                 <br>
                 <div class="card-header">
-                    <h1>Consultar Productos</h1>
+                    <h1>Actualizar Compra</h1>
                 </div>
                 <div class="card-body">
-                    <table class="table">
-                        <thead>
+                    <form method="POST">
+                        <table class="table">
                             <tr>
-                                <th>Codigo de producto</th>
-                                <th>Nombres</th>
-                                <th>Foto</th> 
-                                <th>Descripcion</th>
-                                <th>Precio</th>
-                                <th>Stock</th>
-                                <th>Editar</th>
-                                <th>Eliminar</th>
+                                <th>Id Compra</th>
+                                <th><input type="number" name="idC" class="form-control" value="<%= compraM.getIdCompras()%>"maxlength="10" readonly></th>
                             </tr>
-                        </thead>
-                        <%
-
-                            List<Producto> listaProducto = producto.bucarProducto();
-                            for (Producto temp : listaProducto) {
-                                out.println("<tr>");
-                                out.println("<td>" + temp.getCodProducto() + "</td>");
-                                out.println("<td>" + temp.getNombres() + "</td>");
-                                %>
-                                <td><img src="<%= temp.getRuta() %>" alt="alt" width="50" height="50"/></td>
-                                <%
-                                out.println("<td>" + temp.getDescripcion() + "</td>");
-                                out.println("<td>" + temp.getPrecio() + "</td>");
-                                out.println("<td>" + temp.getStock() + "</td>");
-                        %>
-                        <td>
-                            <a href="actualizarProductos.jsp?codP=<%= temp.getCodProducto()%>">Editar</a>
-                        </td>
-                        <td>
-                            <a href="eliminarProductos.jsp?codP=<%= temp.getCodProducto()%>"
-                               onclick="return confirm('Seguro que desea eliminar el Producto?')">Eliminar</a>
-                        </td>
-
-                        <%
-                                out.println("</tr>");
-                            }
-                        %>
-                    </table>      
+                            <tr>
+                                <th>Id Pago</th>
+                                <th><input type="number" name="idP" class="form-control" value="<%= compraM.getIdPago()%>" required></th>
+                            </tr>
+                            <tr>
+                                <th>Cedula</th>
+                                <th><select name="ced" class="form-control">
+                                        <option> -- Seleccione Cliente --</option>
+                                        <% for (Cliente cl : listaCliente) {%>
+                                        <option value="<%= cl.getCedula()%>"
+                                                <%
+                                                    if (cl.getCedula().equals(compraM.getCedula())) {
+                                                        out.print("selected='selected'");
+                                                    }
+                                                %>> <%= cl.getNombres()%></option>
+                                        <% }%>
+                                    </select></th>
+                            </tr>
+                            <tr>
+                                <th>Monto</th>
+                                <th><input type="number" name="monto" class="form-control" value="<%= compraM.getMonto()%>" required></th>
+                            </tr>
+                            <tr>
+                                <th>Estado</th>
+                                <th><input type="text" name="estado" class="form-control" value="<%= compraM.getEstado()%>"></th>
+                            </tr>
+                            <tr>
+                                <td><input type="submit" name="btnEnviar" value="Actualizar Compra">
+                                </td>
+                            </tr>                
+                        </table>
                 </div>
                 <div class="card-footer">
                     <center>
@@ -170,6 +173,27 @@
             </div>
         </main>
         <script src="../js/nav.js"></script>
-    </body>
-</html>
+    </form>
+    <%
+        SimpleDateFormat formatoFecha = new SimpleDateFormat("yyyy-MM-dd");
+        if (request.getParameter("btnEnviar") != null) {
+            compraM.setIdCompras(Integer.parseInt(request.getParameter("idC")));
+            compraM.setIdPago(Integer.parseInt(request.getParameter("idP")));
+            compraM.setCedula(request.getParameter("ced"));
+            Date fecha = new Date();
+            compraM.setFechaCompra(fecha);
+            compraM.setMonto(Double.parseDouble(request.getParameter("monto")));
+            compraM.setEstado(request.getParameter("estado"));
+            //cm.setPerfil_tipo(Integer.parseInt(request.getParameter("perfil").toString()));
 
+            if (Scompra.actualizarCompra(compraM)) {
+                out.print("Datos actualizados correctamente");
+                out.print(compraM);
+            } else {
+                out.print("No fue posible actualizar datos");
+                out.print(compraM);
+            }
+        }
+    %>
+</body>
+</html>

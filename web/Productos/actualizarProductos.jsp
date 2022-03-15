@@ -1,15 +1,13 @@
 <%-- 
-    Document   : consultaProductos
-    Created on : 13 mar. 2022, 08:52:44
-    Author     : Famila
+    Document   : actualizarProductos
+    Created on : 13/03/2022, 15:36:46
+    Author     : Familia
 --%>
 <%@page import="com.itq.model.Producto"%>
 <%@page import="java.util.List"%>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
-
-<jsp:useBean id="producto" class="com.itq.servicio.ProductoServicio" scope="application"/>
-<%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
-
+<jsp:useBean id="mP" class="com.itq.model.Producto" scope="application"/>
+<jsp:useBean id="sP" class="com.itq.servicio.ProductoServicio" scope="application" />
 <%
     HttpSession objsesion = request.getSession(false);
     String usuario = "";
@@ -27,13 +25,16 @@
         }
     }
 %>
-
-
+<%
+    String id = request.getParameter("codP").toString();
+    mP = sP.buscarPorId(id);
+    //out.print(id);
+%>
 <!DOCTYPE html>
 <html>
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-        <title>Consulta Productos </title>
+        <title>Actualizar Productos</title>
         <link rel="canonical" href="https://getbootstrap.com/docs/5.1/examples/headers/">
         <link href="../assets/dist/css/bootstrap.min.css" rel="stylesheet">
         <link href="../css/headers.css" rel="stylesheet">
@@ -113,63 +114,68 @@
                     </div>
                 </div>
             </header>
-            <div class="container"> 
-                <br>
-                <div class="card-header">
-                    <h1>Consultar Productos</h1>
-                </div>
-                <div class="card-body">
-                    <table class="table">
-                        <thead>
-                            <tr>
-                                <th>Codigo de producto</th>
-                                <th>Nombres</th>
-                                <th>Foto</th> 
-                                <th>Descripcion</th>
-                                <th>Precio</th>
-                                <th>Stock</th>
-                                <th>Editar</th>
-                                <th>Eliminar</th>
-                            </tr>
-                        </thead>
-                        <%
-
-                            List<Producto> listaProducto = producto.bucarProducto();
-                            for (Producto temp : listaProducto) {
-                                out.println("<tr>");
-                                out.println("<td>" + temp.getCodProducto() + "</td>");
-                                out.println("<td>" + temp.getNombres() + "</td>");
-                                %>
-                                <td><img src="<%= temp.getRuta() %>" alt="alt" width="50" height="50"/></td>
-                                <%
-                                out.println("<td>" + temp.getDescripcion() + "</td>");
-                                out.println("<td>" + temp.getPrecio() + "</td>");
-                                out.println("<td>" + temp.getStock() + "</td>");
-                        %>
-                        <td>
-                            <a href="actualizarProductos.jsp?codP=<%= temp.getCodProducto()%>">Editar</a>
-                        </td>
-                        <td>
-                            <a href="eliminarProductos.jsp?codP=<%= temp.getCodProducto()%>"
-                               onclick="return confirm('Seguro que desea eliminar el Producto?')">Eliminar</a>
-                        </td>
-
-                        <%
-                                out.println("</tr>");
-                            }
-                        %>
-                    </table>      
-                </div>
-                <div class="card-footer">
-                    <center>
-                        <a class="btn btn-outline-primary" name="btnGuardar" href="insertarProductos.jsp">
-                            Crear Producto
-                        </a>
-                    </center>
-                </div>
+        </header>
+        <div class="container"> 
+            <br>
+            <div class="card-header">
+                <% out.println("<h1> Datos del Producto " + mP.getNombres() + "</h1>");%>
             </div>
-        </main>
-        <script src="../js/nav.js"></script>
-    </body>
-</html>
+            <div class="card-body">
 
+                <form class="table" method="POST">
+                    <table>
+                        <tr>
+                            <th><input type="text" name="codP" class="form-control" value="<%= mP.getCodProducto()%>" readonly></th>
+                        </tr>
+                        <tr>
+                            <th>Nombres</th>
+                            <th><input type="text" name="nomP" class="form-control" value="<%= mP.getNombres()%>"></th>
+                        </tr>
+                        <tr>
+                            <th>Foto</th>                    
+                            <th><input type="file" name="fotoP" class="form-control" value="<%= mP.getRuta()%>"></th>
+                        </tr>
+                        <tr>
+                            <th>Descripcion</th>
+                            <th><input type="text" name="descP" class="form-control" value="<%= mP.getDescripcion()%>"></th>
+                        </tr>
+                        <tr>
+                            <th>Precio</th>
+                            <th><input type="number" step="0.01" name="precio" class="form-control" value="<%= mP.getPrecio()%>"></th>
+                        </tr>
+                        <tr>
+                            <th>Stock</th>
+                            <th><input type="number" name="stock" class="form-control"  value="<%= mP.getStock()%>"></th>
+                        </tr>                             
+                    </table>
+            </div>
+            <div class="card-footer">
+                <center>
+                    <input class="btn btn-outline-primary" type="submit" name="btnEnviar" value="Actualizar Producto" >  
+                </center>
+            </div>
+            </form>
+        </div>
+    </main>
+    <script src="../js/nav.js"></script>
+    <%
+        if (request.getParameter("btnEnviar") != null) {
+            mP.setCodProducto(request.getParameter("codP"));
+            mP.setNombres(request.getParameter("nomP"));
+            //Implementar carga de foto
+            mP.setDescripcion(request.getParameter("descP"));
+            mP.setPrecio(Double.parseDouble(request.getParameter("precio")));
+            mP.setStock(Integer.parseInt(request.getParameter("stock")));
+            mP.setRuta("http://localhost/img/ruffles2.jpg");
+
+            if (sP.actualizarProducto(mP)) {
+                out.print("Datos actualizados correctamente");
+                //out.print(mP);
+            } else {
+                out.print("No fue posible actualizar datos");
+                //out.print(mP);
+            }
+        }
+    %>
+</body>
+</html>
