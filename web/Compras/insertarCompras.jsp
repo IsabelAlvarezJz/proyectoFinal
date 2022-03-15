@@ -63,7 +63,7 @@
                                 </li>
                                 <li>
                                 <center>
-                                    <a href="consultaProductos.jsp" class="nav-link text-secondary">
+                                    <a href="../Productos/consultaProductos.jsp" class="nav-link text-secondary">
                                         <i class="zmdi zmdi-store material-icons-name" style="font-size: 30px;"></i><br>
                                         Productos
                                     </a>
@@ -71,7 +71,7 @@
                                 </li>
                                 <li>
                                 <center>
-                                    <a href="../Compras/consultaCompras.jsp" class="nav-link text-secondary">
+                                    <a href="consultaCompras.jsp" class="nav-link text-secondary">
                                         <i class="zmdi zmdi-ticket-star material-icons-name" style="font-size: 30px;"></i><br>
                                         Compras
                                     </a>
@@ -79,7 +79,7 @@
                                 </li>
                                 <li>
                                 <center>
-                                    <a href="../Pagos/consultaPagos.jsp" class="nav-link text-secondary">
+                                    <a href="../Pago/consultaPago.jsp" class="nav-link text-secondary">
                                         <i class="zmdi zmdi-card material-icons-name" style="font-size: 30px;"></i><br>
                                         Pagos
                                     </a>
@@ -123,69 +123,68 @@
                         List<Cliente> listaCliente = cliente.bucarCliente();
                     %>
                 </div>
-                <div class="card-body">
-                    <table class="table">
-                        <tr>
-                            <th>Id Compra</th>
-                            <th><input type="number" name="idC" class="form-control" maxlength="10" required></th>
-                        </tr>
-                        <tr>
-                            <th>Id Pago</th>
-                            <th><input type="number" name="idP" class="form-control" required></th>
-                        </tr>
-                        <tr>
-                            <th>Cedula</th>
-                            <th><select name="ced" class="form-control">
-                                    <option> -- Seleccione Cliente --</option>
-                                    <% for (Cliente cl : listaCliente) {%>
-                                    <option value="<%= cl.getCedula()%>"><%= cl.getNombres()%></option>
-                                    <% }%>
-                                </select></th>
-                        </tr>
-                        <tr>
-                            <th>Monto</th>
-                            <th><input type="number" name="monto" class="form-control" required></th>
-                        </tr>
-                        <tr>
-                            <th>Estado</th>
-                            <th><input type="text" name="estado" class="form-control"></th>
-                        </tr> 
-                        <tr>
-                            <td><input type="submit" name="btnEnviar" value="Actualizar Compra">
-                            </td>
-                        </tr>     
-                    </table>
-                </div>
-                <div class="card-footer">
-                   <center>
-                            <input type="submit" class="btn btn-outline-primary" name="btnEnviar" value="Crear Compra"> 
+                <form method="POST">
+                    <div class="card-body">
+                        <table class="table">
+                            <tr hidden>
+                                <th>Id Compra</th>
+                                <th><input type="number" name="idC" class="form-control" maxlength="10" required></th>
+                            </tr>
+                            <tr>
+                                <th>Id Pago</th>
+                                <th><input type="number" name="idP" class="form-control" required></th>
+                            </tr>
+                            <tr>
+                                <th>Cedula</th>
+                                <th><select name="ced" class="form-control">
+                                        <option> -- Seleccione Cliente --</option>
+                                        <% for (Cliente cl : listaCliente) {%>
+                                        <option value="<%= cl.getCedula()%>"><%= cl.getNombres()%></option>
+                                        <% }%>
+                                    </select></th>
+                            </tr>
+                            <tr>
+                                <th>Monto</th>
+                                <th><input type="number" name="monto" class="form-control" required></th>
+                            </tr>
+                            <tr>
+                                <th>Estado</th>
+                                <th><input type="text" name="estado" class="form-control"></th>
+                            </tr>      
+                        </table>
+                    </div>
+                    <div class="card-footer">
+                        <center>
+                            <input type="submit" class="btn btn-outline-primary" name="btnEnviar" value="Crear Compra" hidden> 
                         </center>
-                </div>
+                    </div>
+                </form>
             </div>
+            <%
+                Compras co = new Compras();
+
+                if (request.getParameter("btnEnviar") != null) {
+                    co.setIdCompras(Integer.parseInt(request.getParameter("idC")));
+                    co.setIdPago(Integer.parseInt(request.getParameter("idP")));
+                    co.setCedula(request.getParameter("ced"));
+
+                    Date fecha = new Date();
+                    co.setFechaCompra(fecha);
+                    co.setMonto(Double.parseDouble(request.getParameter("monto")));
+                    co.setEstado(request.getParameter("estado"));
+
+                    //out.print(local)
+                    if (com.insertarCompra(co)) {
+                        response.sendRedirect("consultaCompras.jsp");
+                    } else {
+                        out.print("No fue posible insertar datos");
+                        out.print(co);
+                    }
+                }
+            %>
+
         </main>
         <script src="../js/nav.js"></script>
     </body>
-    <%
-        Compras co = new Compras();
 
-        if (request.getParameter("btnEnviar") != null) {
-            co.setIdCompras(Integer.parseInt(request.getParameter("idC")));
-            co.setIdPago(Integer.parseInt(request.getParameter("idP")));
-            co.setCedula(request.getParameter("ced"));
-
-            Date fecha = new Date();
-            co.setFechaCompra(fecha);
-            co.setMonto(Double.parseDouble(request.getParameter("monto")));
-            co.setEstado(request.getParameter("estado"));
-
-            //out.print(local)
-            if (com.insertarCompra(co)) {
-                out.print("Datos insertados correctamente");
-                out.print(co);
-            } else {
-                out.print("No fue posible insertar datos");
-                out.print(co);
-            }
-        }
-    %>
 </html>

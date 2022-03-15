@@ -56,7 +56,7 @@
                             </li>
                             <li>
                             <center>
-                                <a href="consultaProductos.jsp" class="nav-link text-secondary">
+                                <a href="../Productos/consultaProductos.jsp" class="nav-link text-secondary">
                                     <i class="zmdi zmdi-store material-icons-name" style="font-size: 30px;"></i><br>
                                     Productos
                                 </a>
@@ -64,7 +64,7 @@
                             </li>
                             <li>
                             <center>
-                                <a href="../Compras/consultaCompras.jsp" class="nav-link text-secondary">
+                                <a href="consultaCompras.jsp" class="nav-link text-secondary">
                                     <i class="zmdi zmdi-ticket-star material-icons-name" style="font-size: 30px;"></i><br>
                                     Compras
                                 </a>
@@ -72,7 +72,7 @@
                             </li>
                             <li>
                             <center>
-                                <a href="../Pagos/consultaPagos.jsp" class="nav-link text-secondary">
+                                <a href="../Pago/consultaPago.jsp" class="nav-link text-secondary">
                                     <i class="zmdi zmdi-card material-icons-name" style="font-size: 30px;"></i><br>
                                     Pagos
                                 </a>
@@ -153,7 +153,7 @@
             </div>
             <div class="card-footer">
                 <center>
-                    <a class="btn btn-outline-primary" name="btnGuardar" href="insertarCompras.jsp">
+                    <a class="btn btn-outline-primary" name="btnGuardar" href="insertarCompras.jsp" hidden>
                         Crear Compra
                     </a>
                 </center>

@@ -68,7 +68,7 @@
                                 </li>
                                 <li>
                                 <center>
-                                    <a href="consultaProductos.jsp" class="nav-link text-secondary">
+                                    <a href="../Productos/consultaProductos.jsp" class="nav-link text-secondary">
                                         <i class="zmdi zmdi-store material-icons-name" style="font-size: 30px;"></i><br>
                                         Productos
                                     </a>
@@ -76,7 +76,7 @@
                                 </li>
                                 <li>
                                 <center>
-                                    <a href="../Compras/consultaCompras.jsp" class="nav-link text-secondary">
+                                    <a href="consultaCompras.jsp" class="nav-link text-secondary">
                                         <i class="zmdi zmdi-ticket-star material-icons-name" style="font-size: 30px;"></i><br>
                                         Compras
                                     </a>
@@ -84,7 +84,7 @@
                                 </li>
                                 <li>
                                 <center>
-                                    <a href="../Pagos/consultaPagos.jsp" class="nav-link text-secondary">
+                                    <a href="../Pago/consultaPago.jsp" class="nav-link text-secondary">
                                         <i class="zmdi zmdi-card material-icons-name" style="font-size: 30px;"></i><br>
                                         Pagos
                                     </a>
@@ -124,8 +124,9 @@
                 <div class="card-header">
                     <h1>Actualizar Compra</h1>
                 </div>
-                <div class="card-body">
-                    <form method="POST">
+                <form method="POST">
+                    <div class="card-body">
+
                         <table class="table">
                             <tr>
                                 <th>Id Compra</th>
@@ -151,49 +152,42 @@
                             </tr>
                             <tr>
                                 <th>Monto</th>
-                                <th><input type="number" name="monto" class="form-control" value="<%= compraM.getMonto()%>" required></th>
+                                <th><input type="number" step="0.01" name="monto" class="form-control" value="<%= compraM.getMonto()%>" required></th>
                             </tr>
                             <tr>
                                 <th>Estado</th>
                                 <th><input type="text" name="estado" class="form-control" value="<%= compraM.getEstado()%>"></th>
-                            </tr>
-                            <tr>
-                                <td><input type="submit" name="btnEnviar" value="Actualizar Compra">
-                                </td>
                             </tr>                
                         </table>
-                </div>
-                <div class="card-footer">
-                    <center>
-                        <a class="btn btn-outline-primary" name="btnGuardar" href="insertarProductos.jsp">
-                            Crear Producto
-                        </a>
-                    </center>
-                </div>
+                    </div>
+                    <div class="card-footer">
+                        <center>
+                            <button type="submit" class="btn btn-outline-primary" name="btnEnviar">
+                                Actualizar Compra
+                            </button>
+                        </center>
+                    </div>
+                </form>
             </div>
         </main>
         <script src="../js/nav.js"></script>
-    </form>
-    <%
-        SimpleDateFormat formatoFecha = new SimpleDateFormat("yyyy-MM-dd");
-        if (request.getParameter("btnEnviar") != null) {
-            compraM.setIdCompras(Integer.parseInt(request.getParameter("idC")));
-            compraM.setIdPago(Integer.parseInt(request.getParameter("idP")));
-            compraM.setCedula(request.getParameter("ced"));
-            Date fecha = new Date();
-            compraM.setFechaCompra(fecha);
-            compraM.setMonto(Double.parseDouble(request.getParameter("monto")));
-            compraM.setEstado(request.getParameter("estado"));
-            //cm.setPerfil_tipo(Integer.parseInt(request.getParameter("perfil").toString()));
 
-            if (Scompra.actualizarCompra(compraM)) {
-                out.print("Datos actualizados correctamente");
-                out.print(compraM);
-            } else {
-                out.print("No fue posible actualizar datos");
-                out.print(compraM);
+        <%
+            if (request.getParameter("btnEnviar") != null) {
+                compraM.setIdCompras(Integer.parseInt(request.getParameter("idC")));
+                compraM.setIdPago(Integer.parseInt(request.getParameter("idP")));
+                compraM.setCedula(request.getParameter("ced"));
+                Date fecha = new Date();
+                compraM.setFechaCompra(fecha);
+                compraM.setMonto(Double.parseDouble(request.getParameter("monto")));
+                compraM.setEstado(request.getParameter("estado"));
+
+                if (Scompra.actualizarCompra(compraM)) {
+                    response.sendRedirect("consultaCompras.jsp");
+                } else {
+                    out.print("No fue posible actualizar datos");
+                }
             }
-        }
-    %>
-</body>
+        %>
+    </body>
 </html>

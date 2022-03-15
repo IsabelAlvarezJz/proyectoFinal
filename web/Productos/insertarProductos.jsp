@@ -76,7 +76,7 @@
                                 </li>
                                 <li>
                                 <center>
-                                    <a href="../Pagos/consultaPagos.jsp" class="nav-link text-secondary">
+                                    <a href="../Pago/consultaPago.jsp" class="nav-link text-secondary">
                                         <i class="zmdi zmdi-card material-icons-name" style="font-size: 30px;"></i><br>
                                         Pagos
                                     </a>
