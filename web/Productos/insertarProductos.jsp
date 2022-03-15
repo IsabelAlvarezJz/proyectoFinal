@@ -152,9 +152,7 @@
                     </div>
                     <div class="card-footer">
                         <center>
-                            <input type="submit" class="btn btn-outline-primary" name="btnEnviar" value="Crear Producto">
-                                
-                            
+                            <input type="submit" class="btn btn-outline-primary" name="btnEnviar" value="Crear Producto"> 
                         </center>
                     </div>
 
