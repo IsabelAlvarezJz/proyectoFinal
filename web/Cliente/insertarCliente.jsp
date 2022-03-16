@@ -187,11 +187,7 @@
                     if (cliente.insertarCliente(clien)) {
                         response.sendRedirect("consultarCliente.jsp");
                     } else {
-                        %>
-                        <script>
-                            window.alert("No fue posible insertar datos, verifique que la cedula del cliente no exista actualmente!");
-                        </script>
-            <%
+                        out.println("cedula repetida");
 
                     }
                 }
