@@ -1,3 +1,4 @@
+
 /*
  * To change this license header, choose License Headers in Project Properties.
  * To change this template file, choose Tools | Templates
@@ -66,7 +67,7 @@ public class CompraMetodos extends Conexion implements ICompra {
             ps = getConnetion().prepareStatement(sql);
             ps.setString(1, cedula);
             ResultSet rs = ps.executeQuery();
-            
+
             while (rs.next()) {
                 int idC = rs.getInt("idCompras");
                 int idP = rs.getInt("idPago");
@@ -85,7 +86,7 @@ public class CompraMetodos extends Conexion implements ICompra {
         }
         return listaCompras;
     }
-    
+
     @Override
     public Compras buscarPorCedulaMonto(String cedula, double monto) {
         String sql = " SELECT * FROM compras WHERE cedula = ? AND monto = ?";
@@ -97,7 +98,7 @@ public class CompraMetodos extends Conexion implements ICompra {
             ps.setString(1, cedula);
             ps.setDouble(2, monto);
             ResultSet rs = ps.executeQuery();
-            
+
             while (rs.next()) {
                 int idC = rs.getInt("idCompras");
                 int idP = rs.getInt("idPago");
@@ -129,7 +130,7 @@ public class CompraMetodos extends Conexion implements ICompra {
             //asigno valores
             ps.setInt(1, comp.getIdPago());
             ps.setString(2, comp.getCedula());
-            ps.setDate(3,  new java.sql.Date(comp.getFechaCompra().getTime()));
+            ps.setDate(3, new java.sql.Date(comp.getFechaCompra().getTime()));
             ps.setDouble(4, comp.getMonto());
             ps.setString(5, comp.getEstado());
 
@@ -176,7 +177,7 @@ public class CompraMetodos extends Conexion implements ICompra {
 
     @Override
     public boolean eliminarCompra(int idCompra) {
-        
+
         boolean bandera = true;
 
         String sql = " DELETE FROM compras WHERE idCompras = ?";
@@ -229,3 +230,4 @@ public class CompraMetodos extends Conexion implements ICompra {
     }
 
 }
+

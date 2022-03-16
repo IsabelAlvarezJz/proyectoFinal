@@ -189,6 +189,7 @@
                     } else {
                         out.print("No fue posible insertar datos, ingrese otro numero de cedula aqui...");
                         out.print("Nuevo cambio Oscar");
+                        out.println("Cambio solicitado por la Ingeniera!!!");
                     }
                 }
             %>
