@@ -187,7 +187,7 @@
                     if (cliente.insertarCliente(clien)) {
                         response.sendRedirect("consultarCliente.jsp");
                     } else {
-                        out.println("Ups Cedula repetida!!! No puede ingresar datos repetidos");
+                        out.println("Cambio solicitado por la Ingeniera!!!");
 
                     }
                 }
