@@ -162,7 +162,7 @@
                     </div>
                 </form>
             </div>
-            [13:20, 15/3/2022] Oscar: <%
+            <%
                 Cliente clien = new Cliente();
 
                 if (request.getParameter("btnEnviar") != null) {
