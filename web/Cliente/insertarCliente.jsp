@@ -187,7 +187,7 @@
                     if (cliente.insertarCliente(clien)) {
                         response.sendRedirect("consultarCliente.jsp");
                     } else {
-                        out.print("No fue posible insertar datos, ingrese otro numero de cedula...");
+                        out.print("No fue posible insertar datos, ingrese otro numero de cedula aqui...");
                     }
                 }
             %>
