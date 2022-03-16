@@ -123,7 +123,6 @@
                                 <th>Nombres</th>
                                 <th>Dirección</th> 
                                 <th>Email</th>
-                                <th>Password</th>
                                 <th>Perfil</th>
                                 <th>Editar</th>
                                 <td>Eliminar</td>
@@ -137,7 +136,6 @@
                                 out.println("<td>" + temp.getNombres() + "</td>");
                                 out.println("<td>" + temp.getDireccion() + "</td>");
                                 out.println("<td>" + temp.getEmail() + "</td>");
-                                out.println("<td>" + temp.getPassword() + "</td>");
                                 out.println("<td>" + temp.getPerfil_tipo() + "</td>");
                         %>
                         <td>

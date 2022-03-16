@@ -126,17 +126,17 @@
                             <input type="hidden" class="form-control" name="id" value="<%= pm.getIdPerfil()%>">
                             <tr>
                                 <th>Tipo</th>
-                                <th><input type="text"class="form-control" name="tipo" value="<%= pm.getTipo()%>"></th>
+                                <th><input type="text"class="form-control" name="tipo" value="<%= pm.getTipo()%>" required></th>
                             </tr>
                             <tr>
                                 <th>Descripcion</th>
-                                <th><input type="text"class="form-control" name="des" value="<%= pm.getDescripcion()%>"></th>
+                                <th><input type="text"class="form-control" name="des" value="<%= pm.getDescripcion()%>" required></th>
                             </tr> 
                         </table>
                     </div>
                     <div class="card-footer">
                         <center>
-                            <input class="btn btn-outline-primary" type="submit" name="btnEnviar" value="Actualizar Perfil" >  
+                            <input class="btn btn-outline-primary" type="submit" name="btnEnviar" value="Actualizar Perfil" onclick="return confirm('Seguro que desea actualizar el perfil?')">  
                         </center>
                     </div>
                 </form>

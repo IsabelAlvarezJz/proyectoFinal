@@ -146,8 +146,8 @@
                             </tr>
                             <tr>
                                 <th>Perfil</th>
-                                <th><select class="form-control" name="perfil" >
-                                        <option> -- Seleccione Pefil --</option>
+                                <th><select class="form-control" name="perfil" required>
+                                        <option value=""> -- Seleccione Pefil --</option>
                                         <% for (Perfil pe : perfilLista) {%>
                                         <option value="<%= pe.getIdPerfil()%>"><%= pe.getTipo()%></option>
                                         <% } %>
@@ -157,12 +157,12 @@
                     </div>
                     <div class="card-footer">
                         <center>
-                            <input class="btn btn-outline-primary" type="submit" name="btnEnviar" value="Insertar Cliente" >  
+                            <input class="btn btn-outline-primary" type="submit" name="btnEnviar" value="Insertar Cliente" onclick="return confirm('Seguro que desea inseratar el cliente?')">  
                         </center>
                     </div>
                 </form>
             </div>
-            <%
+            [13:20, 15/3/2022] Oscar: <%
                 Cliente clien = new Cliente();
 
                 if (request.getParameter("btnEnviar") != null) {
