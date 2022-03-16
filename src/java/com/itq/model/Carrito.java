@@ -6,13 +6,13 @@ package com.itq.model;
  */
 public class Carrito {
     int item;
-    String idProducto;
-    String nombres;
-    String descripcion;
-    double precioCompra;
-    int cantidad;
-    double subTotal;
-    String ruta;
+    private String idProducto;
+    private String nombres;
+    private String descripcion;
+    private double precioCompra;
+    private int cantidad;
+    private double subTotal;
+    private String ruta;
 
     public Carrito() {
     }

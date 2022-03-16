@@ -192,7 +192,7 @@
                             window.alert("No fue posible insertar datos, verifique que la cedula del cliente no exista actualmente!");
                         </script>
             <%
-                        //out.print(" No fue posible insertar datos, verifique que la cedula del cliente no exista actualmente!");
+
                     }
                 }
             %>
