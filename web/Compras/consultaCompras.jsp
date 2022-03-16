@@ -154,7 +154,7 @@
             </div>
             <div class="card-footer">
                 <center>
-                    <a class="btn btn-outline-primary" name="btnGuardar" href="insertarCompras.jsp">
+                    <a class="btn btn-outline-primary" name="btnGuardar" href="insertarCompras.jsp" hidden>
                         Crear Compra
                     </a>
                 </center>

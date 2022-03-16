@@ -107,6 +107,13 @@
                 </div>
             </header>
         </main>
+        <div class="card-body">
+            <div style="margin-left: 35%; margin-top: 10%">
+                <img src="images/user.png" width="256" height="256" alt="user"/>
+            </div>
+
+
+        </div>
         <script src="js/nav.js"></script>
     </body>
 </html>

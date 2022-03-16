@@ -66,7 +66,7 @@ public class CompraMetodos extends Conexion implements ICompra {
             ps = getConnetion().prepareStatement(sql);
             ps.setString(1, cedula);
             ResultSet rs = ps.executeQuery();
-            
+
             while (rs.next()) {
                 int idC = rs.getInt("idCompras");
                 int idP = rs.getInt("idPago");
@@ -85,7 +85,7 @@ public class CompraMetodos extends Conexion implements ICompra {
         }
         return listaCompras;
     }
-    
+
     @Override
     public Compras buscarPorCedulaMonto(String cedula, double monto) {
         String sql = " SELECT * FROM compras WHERE cedula = ? AND monto = ?";
@@ -97,7 +97,7 @@ public class CompraMetodos extends Conexion implements ICompra {
             ps.setString(1, cedula);
             ps.setDouble(2, monto);
             ResultSet rs = ps.executeQuery();
-            
+
             while (rs.next()) {
                 int idC = rs.getInt("idCompras");
                 int idP = rs.getInt("idPago");
@@ -129,7 +129,7 @@ public class CompraMetodos extends Conexion implements ICompra {
             //asigno valores
             ps.setInt(1, comp.getIdPago());
             ps.setString(2, comp.getCedula());
-            ps.setDate(3,  new java.sql.Date(comp.getFechaCompra().getTime()));
+            ps.setDate(3, new java.sql.Date(comp.getFechaCompra().getTime()));
             ps.setDouble(4, comp.getMonto());
             ps.setString(5, comp.getEstado());
 
@@ -176,7 +176,7 @@ public class CompraMetodos extends Conexion implements ICompra {
 
     @Override
     public boolean eliminarCompra(int idCompra) {
-        
+
         boolean bandera = true;
 
         String sql = " DELETE FROM compras WHERE idCompras = ?";
@@ -200,7 +200,32 @@ public class CompraMetodos extends Conexion implements ICompra {
 
     @Override
     public Compras buscarPorId(int idCompra) {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+        String sql = " SELECT * FROM compras WHERE idCompras = ?";
+        Compras compr = null;
+        PreparedStatement ps = null;
+
+        try {
+            ps = getConnetion().prepareStatement(sql);
+            ps.setInt(1, idCompra);
+            ResultSet rs = ps.executeQuery();
+            //diferencia entre executeQuery y executeUpdate
+            while (rs.next()) {
+                int idP = rs.getInt("idPago");
+                String ced = rs.getString("cedula");
+                Date fecha = rs.getDate("fechaCompra");
+                double monto = rs.getDouble("monto");
+                String est = rs.getString("estado");
+
+                compr = new Compras(idCompra, idP, ced, fecha, monto, est);
+
+            }
+            rs.close();
+        } catch (SQLException ex) {
+            Logger.getLogger(CompraMetodos.class.getName()).log(Level.SEVERE, null, ex);
+        } finally {
+            cerrar();
+        }
+        return compr;
     }
 
 }
