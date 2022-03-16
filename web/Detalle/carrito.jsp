@@ -65,7 +65,7 @@
                                 </li>
                                 <li>
                                 <center>
-                                    <a href="compras.jsp" class="nav-link text-secondary">
+                                    <a href="Controlador?accion=MisCompras" class="nav-link text-secondary">
                                         <i class="zmdi zmdi-shopping-cart material-icons-name" style="font-size: 30px; color: black;"> 
                                         </i>
                                         <br>
@@ -79,7 +79,7 @@
                                         <i class="zmdi zmdi-shopping-cart material-icons-name" style="font-size: 30px; color: black;"> 
                                         </i>
                                         <br>
-                                        <span style="color: red;">( <% out.println(contador); %> )</span>
+                                        <span style="color: red;">( ${contador} )</span>
                                     </a>
                                 </center>
                                 </li>
@@ -109,7 +109,7 @@
                                     <th>PRECIO</th>
                                     <th>CANTIDAD</th>
                                     <th>SUBTOTAL</th>
-                                    <th>ACCIONES</th>
+                                    <th hidden>ACCIONES</th>
                                 </tr>
                             </thead>
                             <tbody>
@@ -125,7 +125,7 @@
                                             ${car.getCantidad()}
                                         </td>
                                         <td>${car.getSubTotal()}</td>
-                                        <td>
+                                        <td hidden>
                                             <input type="hidden" id="idp" value="${car.getIdProducto()}">
                                             <a href="Controlador?accion=EliminarItem&idProducto=${car.getIdProducto()}" id="btnDelete" class="btn btn-danger">
                                                 <i class="zmdi zmdi-minus material-icons-name"></i>
@@ -170,18 +170,18 @@
                             <div class="card-footer">
                                 <h6>Realizar el Pago</h6>
                                 <form action="Controlador?accion=GenerarCompra" method="post">
-                                    <div class="input-group mb-3">                        
-                                        <input type="text" class="form-control" name="cardName" placeholder="Nombre de Tarjeta" required>
+                                    <div class="input-group mb-3" hidden>                        
+                                        <input type="text" class="form-control" name="cardName" placeholder="Nombre de Tarjeta">
                                     </div>
-                                    <div class="input-group mb-3">                        
-                                        <input type="number" maxlength="16" class="form-control" name="cardNumber" placeholder="Número de Tarjeta" required>
+                                    <div class="input-group mb-3" hidden>                        
+                                        <input type="number" maxlength="16" class="form-control" name="cardNumber" placeholder="Número de Tarjeta">
                                     </div>
                                     <div class="row">
-                                        <div class="col-6">
-                                            <input type="text" class="form-control" name="cardDate" placeholder="MM/YY" required>
+                                        <div class="col-6" hidden>
+                                            <input type="text" class="form-control" name="cardDate" placeholder="MM/YY">
                                         </div>
-                                        <div class="col-6">
-                                            <input type="password" maxlength="3" class="form-control" name="cardCode" placeholder="CVV" required>
+                                        <div class="col-6" hidden>
+                                            <input type="password" maxlength="3" class="form-control" name="cardCode" placeholder="CVV">
                                         </div>
                                     </div>
                                     <br>

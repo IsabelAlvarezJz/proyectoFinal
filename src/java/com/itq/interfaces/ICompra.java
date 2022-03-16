@@ -16,6 +16,7 @@ public interface ICompra {
     
     public List<Compras> buscarCompra();
     public Compras buscarPorId(int idCompra);
+    public Compras buscarPorCedulaMonto(String cedula, double monto);
     public boolean insertarCompra(Compras comp);
     public boolean actualizarCompra(Compras comp);
     public boolean eliminarCompra(int idCompra);

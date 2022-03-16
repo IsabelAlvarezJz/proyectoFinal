@@ -70,7 +70,7 @@
                                 </li>
                                 <li>
                                 <center>
-                                    <a href="" class="nav-link text-secondary">
+                                    <a href="Controlador?accion=MisCompras" class="nav-link text-secondary">
                                         <i class="zmdi zmdi-accounts-list material-icons-name" style="font-size: 30px; color: black;"> 
                                         </i>
                                         <br>
@@ -84,7 +84,7 @@
                                         <i class="zmdi zmdi-shopping-cart material-icons-name" style="font-size: 30px; color: black;"> 
                                         </i>
                                         <br>
-                                        <span style="color: red;">(  )</span>
+                                        <span style="color: red;">( ${contador} )</span>
                                     </a>
                                 </center>
                                 </li>
@@ -128,7 +128,7 @@
                                         <a href="Controlador?accion=AgregarCarrito&idProducto=<%= temp.getCodProducto() %>" class="btn btn-outline-primary">
                                             <i class="zmdi zmdi-shopping-cart material-icons-name"></i>
                                         </a>
-                                        <a href="Controlador?accion=Comprar&idProducto=<%= temp.getCodProducto() %>" class="btn btn-success">
+                                        <a hidden href="Controlador?accion=Comprar&idProducto=<%= temp.getCodProducto() %>" class="btn btn-success">
                                             <i class="zmdi zmdi-money material-icons-name"></i>
                                         </a>
                                     </div>

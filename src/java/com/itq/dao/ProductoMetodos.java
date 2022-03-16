@@ -8,7 +8,6 @@ package com.itq.dao;
 import com.itq.configuracion.Conexion;
 import com.itq.interfaces.IProducto;
 import com.itq.model.Producto;
-import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -22,24 +21,7 @@ import java.util.logging.Logger;
  *
  * @author Familia
  */
-public class ProductoMetodos implements IProducto {
-
-    private Connection conn;
-
-    public ProductoMetodos() {
-        if (conn == null) {
-            conn = Conexion.getConnetion();
-        }
-    }
-
-    private void closeConecction() {
-        try {
-            conn.close();
-        } catch (SQLException ex) {
-            Logger.getLogger(ClienteMetodos.class.getName()).log(Level.SEVERE, null, ex);
-            System.out.println("Error al cerra la conexión ... !!!");
-        }
-    }
+public class ProductoMetodos extends Conexion implements IProducto {
 
     @Override
     public List<Producto> bucarProducto() {
@@ -48,7 +30,7 @@ public class ProductoMetodos implements IProducto {
         Statement stm = null;
         Producto obj = null;
         try {
-            stm = conn.createStatement();
+            stm = getConnetion().createStatement();
             ResultSet rs = stm.executeQuery(sql);
 
             while (rs.next()) {
@@ -67,7 +49,7 @@ public class ProductoMetodos implements IProducto {
         } catch (SQLException ex) {
             Logger.getLogger(ProductoMetodos.class.getName()).log(Level.SEVERE, null, ex);
         } finally {
-            closeConecction();
+            cerrar();
         }
         return listaProducto;
     }
@@ -79,7 +61,7 @@ public class ProductoMetodos implements IProducto {
         PreparedStatement ps = null;
 
         try {
-            ps = conn.prepareStatement(sql);
+            ps = getConnetion().prepareStatement(sql);
             ps.setString(1, codProducto);
             ResultSet rs = ps.executeQuery();
             //diferencia entre executeQuery y executeUpdate
@@ -100,7 +82,7 @@ public class ProductoMetodos implements IProducto {
         } catch (SQLException ex) {
             Logger.getLogger(ProductoMetodos.class.getName()).log(Level.SEVERE, null, ex);
         } finally {
-            closeConecction();
+            cerrar();
         }
         return produc;
     }
@@ -114,7 +96,7 @@ public class ProductoMetodos implements IProducto {
         PreparedStatement ps = null;
 
         try {
-            ps = conn.prepareStatement(sql);
+            ps = getConnetion().prepareStatement(sql);
 
             //asigno valores
             ps.setString(1, prod.getCodProducto());
@@ -132,7 +114,7 @@ public class ProductoMetodos implements IProducto {
             Logger.getLogger(ProductoMetodos.class.getName()).log(Level.SEVERE, null, ex);
             bandera = false;
         } finally {
-            closeConecction();
+            cerrar();
         }
 
         return bandera;
@@ -147,7 +129,7 @@ public class ProductoMetodos implements IProducto {
         PreparedStatement ps = null;
 
         try {
-            ps = conn.prepareStatement(sql);
+            ps = getConnetion().prepareStatement(sql);
 
             //asigno valores
             ps.setString(1, prod.getNombres());
@@ -165,7 +147,7 @@ public class ProductoMetodos implements IProducto {
             Logger.getLogger(ProductoMetodos.class.getName()).log(Level.SEVERE, null, ex);
             bandera = false;
         } finally {
-            closeConecction();
+            cerrar();
         }
 
         return bandera;
@@ -178,7 +160,7 @@ public class ProductoMetodos implements IProducto {
         String sql = " DELETE FROM producto WHERE codProducto = ?";
         PreparedStatement ps = null;
         try {
-            ps = conn.prepareStatement(sql);
+            ps = getConnetion().prepareStatement(sql);
             ps.setString(1, codProducto);
 
             ps.executeUpdate();
@@ -188,7 +170,7 @@ public class ProductoMetodos implements IProducto {
             Logger.getLogger(ProductoMetodos.class.getName()).log(Level.SEVERE, null, ex);
             bandera = false;
         } finally {
-            closeConecction();
+            cerrar();
         }
 
         return bandera;
@@ -199,7 +181,7 @@ public class ProductoMetodos implements IProducto {
         PreparedStatement ps = null;
         int stock = 0;
         try {
-            ps = conn.prepareStatement(sql);
+            ps = getConnetion().prepareStatement(sql);
             ps.setString(1, idProduct);
             ResultSet rs = ps.executeQuery();
 
@@ -209,14 +191,42 @@ public class ProductoMetodos implements IProducto {
             if(stock > 0){
                 return true;
             }
-            rs.close();
+            //rs.close();
         } catch (SQLException ex) {
             Logger.getLogger(ProductoMetodos.class.getName()).log(Level.SEVERE, null, ex);
             return false;
         } finally {
-            closeConecction();
+            cerrar();
         }
         return false;
+    }
+    
+    public Producto infoProducto(String idProducto) throws SQLException{
+        String sql = "SELECT * FROM producto WHERE codProducto = ?";
+        PreparedStatement ps = null;
+        ResultSet rs = null;
+        Producto producto = null;
+        try {
+            ps = getConnetion().prepareStatement(sql);
+            ps.setString(1, idProducto);
+            rs = ps.executeQuery();
+
+            while (rs.next()) {
+                String nombre = rs.getString("nombres");
+                String foto = rs.getString("foto");
+                String descripcion = rs.getString("descripcion");
+                Double precio = rs.getDouble("precio");
+                int stock = rs.getInt("stock");
+                String ruta = rs.getString("ruta");
+                producto = new Producto(idProducto, nombre, foto, descripcion, precio, stock, ruta);
+            }
+            //rs.close();
+        } catch (SQLException ex) {
+            Logger.getLogger(ProductoMetodos.class.getName()).log(Level.SEVERE, null, ex);
+        } finally {
+            cerrar();
+        }
+        return producto;
     }
 
 }

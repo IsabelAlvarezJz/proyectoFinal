@@ -8,7 +8,6 @@ package com.itq.dao;
 import com.itq.configuracion.Conexion;
 import com.itq.interfaces.IPago;
 import com.itq.model.Pago;
-import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -22,24 +21,7 @@ import java.util.logging.Logger;
  *
  * @author Familia
  */
-public class PagoMetodos implements IPago {
-
-    private Connection conn;
-
-    public PagoMetodos() {
-        if (conn == null) {
-            conn = Conexion.getConnetion();
-        }
-    }
-
-    private void closeConecction() {
-        try {
-            conn.close();
-        } catch (SQLException ex) {
-            Logger.getLogger(ClienteMetodos.class.getName()).log(Level.SEVERE, null, ex);
-            System.out.println("Error al cerra la conexión ... !!!");
-        }
-    }
+public class PagoMetodos extends Conexion implements IPago {
 
     @Override
     public List<Pago> buscarPago() {
@@ -49,7 +31,7 @@ public class PagoMetodos implements IPago {
         Pago obj = null;
 
         try {
-            stm = conn.createStatement();
+            stm = getConnetion().createStatement();
             ResultSet rs = stm.executeQuery(sql);
 
             while (rs.next()) {
@@ -63,7 +45,7 @@ public class PagoMetodos implements IPago {
         } catch (SQLException ex) {
             Logger.getLogger(PagoMetodos.class.getName()).log(Level.SEVERE, null, ex);
         } finally {
-            closeConecction();
+            cerrar();
         }
         return listaPago;
     }
@@ -75,7 +57,7 @@ public class PagoMetodos implements IPago {
         PreparedStatement ps = null;
 
         try {
-            ps = conn.prepareStatement(sql);
+            ps = getConnetion().prepareStatement(sql);
             ps.setInt(1, idPago);
             ResultSet rs = ps.executeQuery();
             //diferencia entre executeQuery y executeUpdate
@@ -89,7 +71,7 @@ public class PagoMetodos implements IPago {
         } catch (SQLException ex) {
             Logger.getLogger(PagoMetodos.class.getName()).log(Level.SEVERE, null, ex);
         } finally {
-            closeConecction();
+            cerrar();
         }
         return pag;
     }
@@ -103,7 +85,7 @@ public class PagoMetodos implements IPago {
         PreparedStatement ps = null;
 
         try {
-            ps = conn.prepareStatement(sql);
+            ps = getConnetion().prepareStatement(sql);
 
             //asigno valores
             ps.setDouble(1, pag.getMonto());
@@ -115,7 +97,7 @@ public class PagoMetodos implements IPago {
             Logger.getLogger(PagoMetodos.class.getName()).log(Level.SEVERE, null, ex);
             bandera = false;
         } finally {
-            closeConecction();
+            cerrar();
         }
 
         return bandera;
@@ -129,7 +111,7 @@ public class PagoMetodos implements IPago {
 
         PreparedStatement ps = null;
         try {
-            ps = conn.prepareStatement(sql);
+            ps = getConnetion().prepareStatement(sql);
             ps.setDouble(1, pag.getMonto());
             ps.setInt(2, pag.getIdPago());
 
@@ -139,7 +121,7 @@ public class PagoMetodos implements IPago {
             Logger.getLogger(PagoMetodos.class.getName()).log(Level.SEVERE, null, ex);
             bandera = false;
         } finally {
-            closeConecction();
+            cerrar();
         }
 
         return bandera;
@@ -152,7 +134,7 @@ public class PagoMetodos implements IPago {
         String sql = " DELETE FROM pago WHERE idPago = ?";
         PreparedStatement ps = null;
         try {
-            ps = conn.prepareStatement(sql);
+            ps = getConnetion().prepareStatement(sql);
             ps.setInt(1, idPago);
 
             ps.executeUpdate();
@@ -162,7 +144,7 @@ public class PagoMetodos implements IPago {
             Logger.getLogger(PagoMetodos.class.getName()).log(Level.SEVERE, null, ex);
             bandera = false;
         } finally {
-            closeConecction();
+            cerrar();
         }
 
         return bandera;

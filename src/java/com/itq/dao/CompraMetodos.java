@@ -8,7 +8,6 @@ package com.itq.dao;
 import com.itq.configuracion.Conexion;
 import com.itq.interfaces.ICompra;
 import com.itq.model.Compras;
-import java.sql.Connection;
 import java.util.Date;
 
 import java.sql.PreparedStatement;
@@ -24,24 +23,7 @@ import java.util.logging.Logger;
  *
  * @author Familia
  */
-public class CompraMetodos implements ICompra {
-
-    private Connection conn;
-
-    public CompraMetodos() {
-        if (conn == null) {
-            conn = Conexion.getConnetion();
-        }
-    }
-
-    private void closeConecction() {
-        try {
-            conn.close();
-        } catch (SQLException ex) {
-            Logger.getLogger(ClienteMetodos.class.getName()).log(Level.SEVERE, null, ex);
-            System.out.println("Error al cerra la conexión ... !!!");
-        }
-    }
+public class CompraMetodos extends Conexion implements ICompra {
 
     @Override
     public List<Compras> buscarCompra() {
@@ -51,7 +33,7 @@ public class CompraMetodos implements ICompra {
         Compras obj = null;
 
         try {
-            stm = conn.createStatement();
+            stm = getConnetion().createStatement();
             ResultSet rs = stm.executeQuery(sql);
 
             while (rs.next()) {
@@ -69,37 +51,66 @@ public class CompraMetodos implements ICompra {
         } catch (SQLException ex) {
             Logger.getLogger(CompraMetodos.class.getName()).log(Level.SEVERE, null, ex);
         } finally {
-            closeConecction();
+            cerrar();
         }
         return listaCompras;
     }
 
-    @Override
-    public Compras buscarPorId(int idCompra) {
-        String sql = " SELECT * FROM compras WHERE idCompras = ?";
+    public List<Compras> listaComprasPorId(String cedula) {
+        List<Compras> listaCompras = new ArrayList<Compras>();
+        String sql = " SELECT * FROM compras WHERE cedula = ?";
         Compras compr = null;
         PreparedStatement ps = null;
 
         try {
-            ps = conn.prepareStatement(sql);
-            ps.setInt(1, idCompra);
+            ps = getConnetion().prepareStatement(sql);
+            ps.setString(1, cedula);
             ResultSet rs = ps.executeQuery();
-            //diferencia entre executeQuery y executeUpdate
+            
             while (rs.next()) {
+                int idC = rs.getInt("idCompras");
                 int idP = rs.getInt("idPago");
                 String ced = rs.getString("cedula");
                 Date fecha = rs.getDate("fechaCompra");
                 double monto = rs.getDouble("monto");
                 String est = rs.getString("estado");
 
-                compr = new Compras(idCompra, idP, ced, fecha, monto, est);
-
+                compr = new Compras(idC, idP, ced, fecha, monto, est);
+                listaCompras.add(compr);
             }
-            rs.close();
         } catch (SQLException ex) {
             Logger.getLogger(CompraMetodos.class.getName()).log(Level.SEVERE, null, ex);
         } finally {
-            closeConecction();
+            cerrar();
+        }
+        return listaCompras;
+    }
+    
+    @Override
+    public Compras buscarPorCedulaMonto(String cedula, double monto) {
+        String sql = " SELECT * FROM compras WHERE cedula = ? AND monto = ?";
+        Compras compr = null;
+        PreparedStatement ps = null;
+
+        try {
+            ps = getConnetion().prepareStatement(sql);
+            ps.setString(1, cedula);
+            ps.setDouble(2, monto);
+            ResultSet rs = ps.executeQuery();
+            
+            while (rs.next()) {
+                int idC = rs.getInt("idCompras");
+                int idP = rs.getInt("idPago");
+                String ced = rs.getString("cedula");
+                Date fecha = rs.getDate("fechaCompra");
+                double mon = rs.getDouble("monto");
+                String est = rs.getString("estado");
+                compr = new Compras(idC, idP, ced, fecha, monto, est);
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(CompraMetodos.class.getName()).log(Level.SEVERE, null, ex);
+        } finally {
+            cerrar();
         }
         return compr;
     }
@@ -113,7 +124,7 @@ public class CompraMetodos implements ICompra {
         PreparedStatement ps = null;
 
         try {
-            ps = conn.prepareStatement(sql);
+            ps = getConnetion().prepareStatement(sql);
 
             //asigno valores
             ps.setInt(1, comp.getIdPago());
@@ -129,7 +140,7 @@ public class CompraMetodos implements ICompra {
             Logger.getLogger(CompraMetodos.class.getName()).log(Level.SEVERE, null, ex);
             bandera = false;
         } finally {
-            closeConecction();
+            cerrar();
         }
 
         return bandera;
@@ -143,7 +154,7 @@ public class CompraMetodos implements ICompra {
 
         PreparedStatement ps = null;
         try {
-            ps = conn.prepareStatement(sql);
+            ps = getConnetion().prepareStatement(sql);
             ps.setInt(1, comp.getIdPago());
             ps.setString(2, comp.getCedula());
             ps.setDate(3, new java.sql.Date(comp.getFechaCompra().getTime()));
@@ -157,7 +168,7 @@ public class CompraMetodos implements ICompra {
             Logger.getLogger(CompraMetodos.class.getName()).log(Level.SEVERE, null, ex);
             bandera = false;
         } finally {
-            closeConecction();
+            cerrar();
         }
 
         return bandera;
@@ -171,7 +182,7 @@ public class CompraMetodos implements ICompra {
         String sql = " DELETE FROM compras WHERE idCompras = ?";
         PreparedStatement ps = null;
         try {
-            ps = conn.prepareStatement(sql);
+            ps = getConnetion().prepareStatement(sql);
             ps.setInt(1, idCompra);
 
             ps.executeUpdate();
@@ -181,10 +192,15 @@ public class CompraMetodos implements ICompra {
             Logger.getLogger(CompraMetodos.class.getName()).log(Level.SEVERE, null, ex);
             bandera = false;
         } finally {
-            closeConecction();
+            cerrar();
         }
 
         return bandera;
+    }
+
+    @Override
+    public Compras buscarPorId(int idCompra) {
+        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
     }
 
 }

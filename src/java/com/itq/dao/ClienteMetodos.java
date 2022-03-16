@@ -3,7 +3,6 @@ package com.itq.dao;
 import com.itq.configuracion.Conexion;
 import com.itq.interfaces.ICliente;
 import com.itq.model.Cliente;
-import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -13,24 +12,7 @@ import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
-public class ClienteMetodos implements ICliente {
-
-    private Connection conn;
-
-    public ClienteMetodos() {
-        if (conn == null) {
-            conn = Conexion.getConnetion();
-        }
-    }
-
-    private void closeConecction() {
-        try {
-            conn.close();
-        } catch (SQLException ex) {
-            Logger.getLogger(ClienteMetodos.class.getName()).log(Level.SEVERE, null, ex);
-            System.out.println("Error al cerra la conexión ... !!!");
-        }
-    }
+public class ClienteMetodos extends Conexion implements ICliente {
 
     @Override
     public List<Cliente> bucarCliente() {
@@ -40,7 +22,7 @@ public class ClienteMetodos implements ICliente {
         Cliente objCliente = null;
 
         try {
-            stCliente = conn.createStatement();
+            stCliente = getConnetion().createStatement();
             ResultSet rsCliente = stCliente.executeQuery(sql);
 
             while (rsCliente.next()) {
@@ -58,7 +40,7 @@ public class ClienteMetodos implements ICliente {
         } catch (SQLException ex) {
             Logger.getLogger(ClienteMetodos.class.getName()).log(Level.SEVERE, null, ex);
         } finally {
-            closeConecction();
+            cerrar();
         }
         return listaClientes;
     }
@@ -70,7 +52,7 @@ public class ClienteMetodos implements ICliente {
         PreparedStatement psCliente = null;
 
         try {
-            psCliente = conn.prepareStatement(sql);
+            psCliente = getConnetion().prepareStatement(sql);
             psCliente.setString(1, cedula);
             ResultSet rsCliente = psCliente.executeQuery();
             //diferencia entre executeQuery y executeUpdate
@@ -88,7 +70,7 @@ public class ClienteMetodos implements ICliente {
         } catch (SQLException ex) {
             Logger.getLogger(ClienteMetodos.class.getName()).log(Level.SEVERE, null, ex);
         } finally {
-            closeConecction();
+            cerrar();
         }
         return clientes;
     }
@@ -102,7 +84,7 @@ public class ClienteMetodos implements ICliente {
         PreparedStatement psCliente = null;
 
         try {
-            psCliente = conn.prepareStatement(sql);
+            psCliente = getConnetion().prepareStatement(sql);
 
             //asigno valores
             psCliente.setString(1, client.getCedula());
@@ -119,7 +101,7 @@ public class ClienteMetodos implements ICliente {
             Logger.getLogger(ClienteMetodos.class.getName()).log(Level.SEVERE, null, ex);
             bandera = false;
         } finally {
-            closeConecction();
+            cerrar();
         }
 
         return bandera;
@@ -134,7 +116,7 @@ public class ClienteMetodos implements ICliente {
         PreparedStatement psCliente = null;
 
         try {
-            psCliente = conn.prepareStatement(sql);
+            psCliente = getConnetion().prepareStatement(sql);
 
             //asigno valores
             psCliente.setString(1, client.getNombres());
@@ -151,7 +133,7 @@ public class ClienteMetodos implements ICliente {
             Logger.getLogger(ClienteMetodos.class.getName()).log(Level.SEVERE, null, ex);
             bandera = false;
         } finally {
-            closeConecction();
+            cerrar();
         }
 
         return bandera;
@@ -164,7 +146,7 @@ public class ClienteMetodos implements ICliente {
         String sql = " DELETE FROM cliente WHERE cedula = ?";
         PreparedStatement psCliente = null;
         try {
-            psCliente = conn.prepareStatement(sql);
+            psCliente = getConnetion().prepareStatement(sql);
             psCliente.setString(1, cedula);
 
             psCliente.executeUpdate();
@@ -174,7 +156,7 @@ public class ClienteMetodos implements ICliente {
             Logger.getLogger(ClienteMetodos.class.getName()).log(Level.SEVERE, null, ex);
             bandera = false;
         } finally {
-            closeConecction();
+            cerrar();
         }
 
         return bandera;

@@ -8,7 +8,6 @@ package com.itq.dao;
 import com.itq.configuracion.Conexion;
 import com.itq.interfaces.IPerfil;
 import com.itq.model.Perfil;
-import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -22,24 +21,7 @@ import java.util.logging.Logger;
  *
  * @author Familia
  */
-public class PerfilMetodos implements IPerfil {
-
-    private Connection conn;
-
-    public PerfilMetodos() {
-        if (conn == null) {
-            conn = Conexion.getConnetion();
-        }
-    }
-
-    private void closeConecction() {
-        try {
-            conn.close();
-        } catch (SQLException ex) {
-            Logger.getLogger(ClienteMetodos.class.getName()).log(Level.SEVERE, null, ex);
-            System.out.println("Error al cerra la conexión ... !!!");
-        }
-    }
+public class PerfilMetodos extends Conexion implements IPerfil {
 
     @Override
     public List<Perfil> buscarPerfil() {
@@ -49,7 +31,7 @@ public class PerfilMetodos implements IPerfil {
         Perfil objPerfil = null;
  
         try {
-            stPerfil = conn.createStatement();
+            stPerfil = getConnetion().createStatement();
             ResultSet rsPerfil = stPerfil.executeQuery(sql);
 
             while (rsPerfil.next()) {
@@ -64,7 +46,7 @@ public class PerfilMetodos implements IPerfil {
         } catch (SQLException ex) {
             Logger.getLogger(PerfilMetodos.class.getName()).log(Level.SEVERE, null, ex);
         } finally {
-            closeConecction();
+            cerrar();
         }
         return listaPerfiles;
     }
@@ -76,7 +58,7 @@ public class PerfilMetodos implements IPerfil {
         PreparedStatement psPerfil = null;
 
         try {
-            psPerfil = conn.prepareStatement(sql);
+            psPerfil = getConnetion().prepareStatement(sql);
             psPerfil.setInt(1, idPerfil);
             ResultSet rsPerfil = psPerfil.executeQuery();
             //diferencia entre executeQuery y executeUpdate
@@ -91,7 +73,7 @@ public class PerfilMetodos implements IPerfil {
         } catch (SQLException ex) {
             Logger.getLogger(PerfilMetodos.class.getName()).log(Level.SEVERE, null, ex);
         } finally {
-            closeConecction();
+            cerrar();
         }
         return perf;
     }
@@ -105,7 +87,7 @@ public class PerfilMetodos implements IPerfil {
         PreparedStatement psPerfil = null;
 
         try {
-            psPerfil = conn.prepareStatement(sql);
+            psPerfil = getConnetion().prepareStatement(sql);
 
             //asigno valores
             psPerfil.setString(1, perf.getTipo());
@@ -118,7 +100,7 @@ public class PerfilMetodos implements IPerfil {
             Logger.getLogger(PerfilMetodos.class.getName()).log(Level.SEVERE, null, ex);
             bandera = false;
         } finally {
-            closeConecction();
+            cerrar();
         }
 
         return bandera;
@@ -132,7 +114,7 @@ public class PerfilMetodos implements IPerfil {
 
         PreparedStatement psPerfil = null;
         try {
-            psPerfil = conn.prepareStatement(sql);
+            psPerfil = getConnetion().prepareStatement(sql);
             psPerfil.setString(1, perfil.getTipo());
             psPerfil.setString(2, perfil.getDescripcion()); 
             psPerfil.setInt(3, perfil.getIdPerfil());
@@ -143,7 +125,7 @@ public class PerfilMetodos implements IPerfil {
             Logger.getLogger(PerfilMetodos.class.getName()).log(Level.SEVERE, null, ex);
             bandera = false;
         } finally {
-            closeConecction();
+            cerrar();
         }
 
         return bandera;
@@ -156,7 +138,7 @@ public class PerfilMetodos implements IPerfil {
         String sql = " DELETE FROM perfil WHERE idperfil = ?";
         PreparedStatement psPerfil = null;
         try {
-            psPerfil = conn.prepareStatement(sql);
+            psPerfil = getConnetion().prepareStatement(sql);
             psPerfil.setInt(1, idPerfil);
 
             psPerfil.executeUpdate();
@@ -166,7 +148,7 @@ public class PerfilMetodos implements IPerfil {
             Logger.getLogger(PerfilMetodos.class.getName()).log(Level.SEVERE, null, ex);
             bandera = false;
         } finally {
-            closeConecction();
+            cerrar();
         }
 
         return bandera;

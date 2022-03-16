@@ -90,6 +90,7 @@
                                         objsesion.setAttribute("direccionUsuario", direccion);
                                         objsesion.setAttribute("emailUsuario", email);
                                         objsesion.setAttribute("tipoUsuario", perfilTipo);
+                                        objsesion.setAttribute("contador", 0);
                                         response.sendRedirect("principal.jsp");
                                     } else {
                                         out.println("Ups, algo salio mal!");

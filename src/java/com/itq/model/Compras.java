@@ -34,6 +34,16 @@ public class Compras {
         this.estado = estado;
     }
 
+    public Compras(int idCompras, int idPago, String cedula, Date fechaCompra, double monto, String estado, List<Compras> compra) {
+        this.idCompras = idCompras;
+        this.idPago = idPago;
+        this.cedula = cedula;
+        this.fechaCompra = fechaCompra;
+        this.monto = monto;
+        this.estado = estado;
+        this.compra = compra;
+    }
+
     public int getIdCompras() {
         return idCompras;
     }
