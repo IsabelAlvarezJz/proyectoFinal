@@ -149,13 +149,20 @@
                             </tr>
                             <tr>
                                 <th>Estado</th>
-                                <th><input type="text" name="estado" class="form-control"></th>
+                                <th>
+                                    <select name="estado" class="form-control">
+                                        <option value="Pendiente">Pendiente</option>
+                                        <option value="En Camino">En Camino</option>
+                                        <option value="Rechazado">Rechazado</option>
+                                        <option value="Aprobado">Aprobado</option>
+                                    </select>
+                                </th>
                             </tr>      
                         </table>
                     </div>
                     <div class="card-footer">
                         <center>
-                            <input type="submit" class="btn btn-outline-primary" name="btnEnviar" value="Crear Compra" hidden> 
+                            <input type="submit" class="btn btn-outline-primary" name="btnEnviar" value="Crear Compra"> 
                         </center>
                     </div>
                 </form>

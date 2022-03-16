@@ -6,6 +6,7 @@
 <%@page import="com.itq.model.Compras"%>
 <%@page import="java.util.List"%>
 <jsp:useBean id="comp" class="com.itq.servicio.CompraServicio" scope="application"/>
+<jsp:useBean id="clienteS" class="com.itq.servicio.ClienteServicio" scope="application" />
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <%
     HttpSession objsesion = request.getSession(false);
@@ -153,7 +154,7 @@
             </div>
             <div class="card-footer">
                 <center>
-                    <a class="btn btn-outline-primary" name="btnGuardar" href="insertarCompras.jsp" hidden>
+                    <a class="btn btn-outline-primary" name="btnGuardar" href="insertarCompras.jsp">
                         Crear Compra
                     </a>
                 </center>

@@ -150,7 +150,7 @@
             </div>
             <div class="card-footer">
                 <center>
-                    <input class="btn btn-outline-primary" type="submit" name="btnEnviar" value="Actualizar Producto" >  
+                    <input class="btn btn-outline-primary" type="submit" name="btnEnviar" value="Actualizar Producto" onclick="return confirm('Seguro que desea actualizar el Producto?')">  
                 </center>
             </div>
             </form>
@@ -169,7 +169,7 @@
 
             if (sP.actualizarProducto(mP)) {
                 out.print("Datos actualizados correctamente");
-                //out.print(mP);
+                response.sendRedirect("consultaProductos.jsp");
             } else {
                 out.print("No fue posible actualizar datos");
                 //out.print(mP);

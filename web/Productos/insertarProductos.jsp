@@ -138,7 +138,7 @@
                             </tr>
                             <tr>
                                 <th>Precio</th>
-                                <th><input type="number" class="form-control" name="precio" required></th>
+                                <th><input type="number" class="form-control" step="0.01" name="precio" required></th>
                             </tr>
                             <tr>
                                 <th>Stock</th>
@@ -156,7 +156,6 @@
                 </form>
                 <%
                     Producto pro = new Producto();
-
                     if (request.getParameter("btnEnviar") != null) {
                         pro.setCodProducto(request.getParameter("idP"));
                         pro.setNombres(request.getParameter("nomP"));
@@ -179,11 +178,11 @@
                         pro.setRuta("http://localhost/img/ruffles.jpg");
                         if (producto.insertarProducto(pro)) {
                             out.print("Datos insertados correctamente");
-                            out.print(pro);
+                            response.sendRedirect("consultaProductos.jsp");
 
                         } else {
-                            out.print("No fue posible insertar datos");
-                            out.print(pro);
+                            out.print(" No fue posible insertar datos, verifique que el codigo de producto no exista actualmente!");
+                            //out.print(pro);
                         }
 
                     }

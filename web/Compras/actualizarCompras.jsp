@@ -128,41 +128,47 @@
                     <div class="card-body">
 
                         <table class="table">
-                            <tr>
+                            <tr hidden>
                                 <th>Id Compra</th>
                                 <th><input type="number" name="idC" class="form-control" value="<%= compraM.getIdCompras()%>"maxlength="10" readonly></th>
                             </tr>
-                            <tr>
+                            <tr hidden>
                                 <th>Id Pago</th>
-                                <th><input type="number" name="idP" class="form-control" value="<%= compraM.getIdPago()%>" required></th>
+                                <th><input type="number" name="idP" class="form-control" value="<%= compraM.getIdPago()%>" readonly></th>
                             </tr>
                             <tr>
-                                <th>Cedula</th>
-                                <th><select name="ced" class="form-control">
-                                        <option> -- Seleccione Cliente --</option>
+                                <th>Cliente</th>
+                                <th><select name="ced" class="form-control" readonly>
                                         <% for (Cliente cl : listaCliente) {%>
                                         <option value="<%= cl.getCedula()%>"
                                                 <%
                                                     if (cl.getCedula().equals(compraM.getCedula())) {
                                                         out.print("selected='selected'");
                                                     }
-                                                %>> <%= cl.getNombres()%></option>
+                                                %>><%= cl.getCedula() + " - " +cl.getNombres()%></option>
                                         <% }%>
                                     </select></th>
                             </tr>
                             <tr>
                                 <th>Monto</th>
-                                <th><input type="number" step="0.01" name="monto" class="form-control" value="<%= compraM.getMonto()%>" required></th>
+                                <th><input type="number" step="0.01" name="monto" class="form-control" value="<%= compraM.getMonto()%>" readonly></th>
                             </tr>
                             <tr>
                                 <th>Estado</th>
-                                <th><input type="text" name="estado" class="form-control" value="<%= compraM.getEstado()%>"></th>
+                                <th>
+                                    <select name="estado" class="form-control" value="<%= compraM.getEstado()%>">
+                                        <option value="Pendiente">Pendiente</option>
+                                        <option value="En Camino">En Camino</option>
+                                        <option value="Rechazado">Rechazado</option>
+                                        <option value="Aprobado">Aprobado</option>
+                                    </select>
+                                </th>
                             </tr>                
                         </table>
                     </div>
                     <div class="card-footer">
                         <center>
-                            <button type="submit" class="btn btn-outline-primary" name="btnEnviar">
+                            <button type="submit" class="btn btn-outline-primary" name="btnEnviar" onclick="return confirm('Seguro que desea actualizar el Estado de la Compra?')">
                                 Actualizar Compra
                             </button>
                         </center>
@@ -173,7 +179,7 @@
         <script src="../js/nav.js"></script>
 
         <%
-            if (request.getParameter("btnEnviar") != null) {
+            if (request.getParameter("btnEnviar") != null ){
                 compraM.setIdCompras(Integer.parseInt(request.getParameter("idC")));
                 compraM.setIdPago(Integer.parseInt(request.getParameter("idP")));
                 compraM.setCedula(request.getParameter("ced"));
