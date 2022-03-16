@@ -187,7 +187,7 @@
                     if (cliente.insertarCliente(clien)) {
                         response.sendRedirect("consultarCliente.jsp");
                     } else {
-                        out.print("cedula mal");
+                        out.print("cedula mal puesta");
 
                     }
                 }
