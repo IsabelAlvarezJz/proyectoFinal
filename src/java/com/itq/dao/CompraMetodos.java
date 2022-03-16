@@ -200,7 +200,32 @@ public class CompraMetodos extends Conexion implements ICompra {
 
     @Override
     public Compras buscarPorId(int idCompra) {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+        String sql = " SELECT * FROM compras WHERE idCompras = ?";
+        Compras compr = null;
+        PreparedStatement ps = null;
+
+        try {
+            ps = getConnetion().prepareStatement(sql);
+            ps.setInt(1, idCompra);
+            ResultSet rs = ps.executeQuery();
+            //diferencia entre executeQuery y executeUpdate
+            while (rs.next()) {
+                int idP = rs.getInt("idPago");
+                String ced = rs.getString("cedula");
+                Date fecha = rs.getDate("fechaCompra");
+                double monto = rs.getDouble("monto");
+                String est = rs.getString("estado");
+
+                compr = new Compras(idCompra, idP, ced, fecha, monto, est);
+
+            }
+            rs.close();
+        } catch (SQLException ex) {
+            Logger.getLogger(CompraMetodos.class.getName()).log(Level.SEVERE, null, ex);
+        } finally {
+            cerrar();
+        }
+        return compr;
     }
 
 }

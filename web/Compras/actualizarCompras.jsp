@@ -157,10 +157,10 @@
                                 <th>Estado</th>
                                 <th>
                                     <select name="estado" class="form-control" value="<%= compraM.getEstado()%>">
-                                        <option value="Pendiente">Pendiente</option>
-                                        <option value="En Camino">En Camino</option>
-                                        <option value="Rechazado">Rechazado</option>
-                                        <option value="Aprobado">Aprobado</option>
+                                        <option value="PENDIENTE">PENDIENTE</option>
+                                        <option value="EN CAMINO">EN CAMINO</option>
+                                        <option value="RECHAZADO">RECHAZADO</option>
+                                        <option value="PROCESADO">PROCESADO</option>
                                     </select>
                                 </th>
                             </tr>                

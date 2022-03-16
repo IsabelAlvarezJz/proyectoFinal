@@ -152,7 +152,7 @@
                     %>
                 </table>
             </div>
-            <div class="card-footer">
+                <div class="card-footer" hidden>
                 <center>
                     <a class="btn btn-outline-primary" name="btnGuardar" href="insertarCompras.jsp">
                         Crear Compra

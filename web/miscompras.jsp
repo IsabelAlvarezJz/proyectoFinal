@@ -59,7 +59,7 @@
                                 </li>
                                 <li>
                                 <center>
-                                    <a href="ofertas.jsp" class="nav-link text-secondary">
+                                    <a href="#" class="nav-link text-secondary">
                                         <i class="zmdi zmdi-local-offer material-icons-name" style="font-size: 30px; color: black;"></i><br>
                                         <span style="color: black;">Ofertas</span>
                                     </a>
