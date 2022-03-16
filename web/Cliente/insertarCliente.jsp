@@ -188,6 +188,7 @@
                         response.sendRedirect("consultarCliente.jsp");
                     } else {
                         out.print("No fue posible insertar datos, ingrese otro numero de cedula aqui...");
+                        out.print("Nuevo cambio Oscar");
                     }
                 }
             %>
