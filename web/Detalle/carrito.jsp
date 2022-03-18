@@ -46,6 +46,9 @@
                                 <img src="images/user.png" alt="sing up image" style="width: 40px; height: 40px; margin-right: 20px;"> 
                                 <span style="color: black;">Hola: <% out.println(usuario);%></span>
                             </a>
+                            <a href="/" class="d-flex align-items-center my-2 my-lg-0 me-lg-auto text-white text-decoration-none">
+                                <span style="color: black;">SHOOPER</span>
+                            </a>
                             <ul class="nav col-12 col-lg-auto my-2 justify-content-center my-md-0 text-small">
                                 <li>
                                 <center>

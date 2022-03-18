@@ -51,6 +51,9 @@
                                 <img src="images/user.png" alt="sing up image" style="width: 40px; height: 40px; margin-right: 20px;"> 
                                 <span style="color: black;">Hola: <% out.println(usuario);%></span>
                             </a>
+                            <a href="/" class="d-flex align-items-center my-2 my-lg-0 me-lg-auto text-white text-decoration-none">
+                                <span style="color: black;">SHOOPER</span>
+                            </a>
                             <ul class="nav col-12 col-lg-auto my-2 justify-content-center my-md-0 text-small">
                                 <li>
                                 <center>
@@ -123,6 +126,7 @@
                                         <img src="<%= temp.getRuta() %>" alt="alt" width="100" height="100"/>
                                         <br>
                                         <%= temp.getDescripcion()%>
+                                        <p> $ <%= temp.getPrecio()%></p>
                                     </div>
                                     <div class='card-footer' style="border-radius: 1px; background-color: #ecedee;">
                                         <a href="Controlador?accion=AgregarCarrito&idProducto=<%= temp.getCodProducto() %>" class="btn btn-outline-primary">

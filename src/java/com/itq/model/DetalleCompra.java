@@ -13,6 +13,7 @@ public class DetalleCompra {
     private String codProducto;
     private int cantidad;
     private double precioUnitario;
+    private String nombres, descripcion;
 
     public DetalleCompra() {
     }
@@ -24,6 +25,35 @@ public class DetalleCompra {
         this.cantidad = cantidad;
         this.precioUnitario = precioUnitario;
     }
+
+    public DetalleCompra(int idDetalle, int idCompras, String codProducto, int cantidad, double precioUnitario, String nombres, String descripcion) {
+        this.idDetalle = idDetalle;
+        this.idCompras = idCompras;
+        this.codProducto = codProducto;
+        this.cantidad = cantidad;
+        this.precioUnitario = precioUnitario;
+        this.nombres = nombres;
+        this.descripcion = descripcion;
+    }
+
+    
+    public String getNombres() {
+        return nombres;
+    }
+
+    public void setNombres(String nombres) {
+        this.nombres = nombres;
+    }
+
+    public String getDescripcion() {
+        return descripcion;
+    }
+
+    public void setDescripcion(String descripcion) {
+        this.descripcion = descripcion;
+    }
+    
+    
 
     public int getIdDetalle() {
         return idDetalle;
@@ -67,8 +97,8 @@ public class DetalleCompra {
 
     @Override
     public String toString() {
-        return "DetalleCompra{" + "idDetalle=" + idDetalle + ", idCompras=" + idCompras + ", codProducto=" + codProducto + ", cantidad=" + cantidad + ", precioUnitario=" + precioUnitario + '}';
+        return "DetalleCompra{" + "idDetalle=" + idDetalle + ", idCompras=" + idCompras + ", codProducto=" + codProducto + ", cantidad=" + cantidad + ", precioUnitario=" + precioUnitario + ", nombres=" + nombres + ", descripcion=" + descripcion + '}';
     }
-    
+
     
 }

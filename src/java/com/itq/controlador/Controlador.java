@@ -11,6 +11,11 @@ import com.itq.model.Cliente;
 import com.itq.model.Compras;
 import com.itq.model.DetalleCompra;
 import com.itq.model.Pago;
+import jakarta.servlet.ServletException;
+import jakarta.servlet.http.HttpServlet;
+import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpServletResponse;
+import jakarta.servlet.http.HttpSession;
 import java.io.IOException;
 import java.sql.SQLException;
 import java.util.ArrayList;
@@ -18,11 +23,6 @@ import java.util.Date;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import javax.servlet.ServletException;
-import javax.servlet.http.HttpServlet;
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.HttpSession;
 
 /**
  *
@@ -201,6 +201,16 @@ public class Controlador extends HttpServlet {
                 compras = compm.listaComprasPorId(ced);
                 request.setAttribute("compras", compras);
                 request.getRequestDispatcher("miscompras.jsp").forward(request, response);
+                break;
+            case "DetalleCompras":
+                int idCompra = Integer.parseInt(request.getParameter("idCompra"));
+                System.out.println("ID: " + idCompra);
+                List<DetalleCompra> lista = new ArrayList<>();
+                lista = detm.listaDetalleComprasPorId(idCompra);
+                System.out.println("LISTA DETALLE: " + lista.size());
+                System.out.println("LISTA DETALLE: " + lista);
+                request.setAttribute("detalle", lista);
+                request.getRequestDispatcher("Detalle/detalle.jsp").forward(request, response);
                 break;
             default:
                 request.setAttribute("contador", sizeCarrito); 

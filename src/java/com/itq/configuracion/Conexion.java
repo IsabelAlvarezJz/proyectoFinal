@@ -11,8 +11,8 @@ import java.sql.SQLException;
 public class Conexion {
     
     public Connection conn = null;
-    private final String USER = "jhostin";
-    private final String CLAVE = "jhostin123";
+    private final String USER = "root";
+    private final String CLAVE = "Palvarez11";
     private final String URL = "jdbc:mysql://localhost:3306/bdd_tienda?allowPublicKeyRetrieval=true&useSSL=false&serverTimezone=UTC";
     private final String CLASS_DRIVER = "com.mysql.cj.jdbc.Driver";
 

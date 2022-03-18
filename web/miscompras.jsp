@@ -48,6 +48,9 @@
                                 <img src="images/user.png" alt="sing up image" style="width: 40px; height: 40px; margin-right: 20px;"> 
                                 <span style="color: black;">Hola: <% out.println(usuario);%></span>
                             </a>
+                            <a href="/" class="d-flex align-items-center my-2 my-lg-0 me-lg-auto text-white text-decoration-none">
+                                <span style="color: black;">SHOOPER</span>
+                            </a>
                             <ul class="nav col-12 col-lg-auto my-2 justify-content-center my-md-0 text-small">
                                 <li>
                                 <center>
@@ -105,13 +108,18 @@
                         <div class="col-3">
                             <div class="card mt-3">
                                 <div class="card-header text-center">
+                                    <span>ID ${c.getIdCompras()}</span>
+                                    <br>
                                     <span>FECHA: ${c.getFechaCompra()}</span>
                                 </div>
                                 <div class="card-body text-center">                                
                                     <span>ESTADO : ${c.getEstado()}</span>  
+                                    <span>TOTAL: ${c.getMonto()}</span> 
                                 </div>
                                 <div class="card-footer text-center">
-                                    <span>TOTAL: ${c.getMonto()}</span>                                                              
+                                    <a href="Controlador?accion=DetalleCompras&idCompra=${c.getIdCompras()}" class="btn btn-outline-primary">
+                                        <i class="zmdi zmdi-eye material-icons-name"></i>
+                                    </a>
                                 </div>
                             </div>
                         </div>
